@@ -1,7 +1,9 @@
 import Ember from 'ember';
+//import RSVP from 'rsvp';
+
 
 export default Ember.Route.extend({
   model() {
-    return ['Marie Curie', 'Mae Jemison', 'Albert Hofmann'];
+    return this.get('store').findAll('category');
   }
 });
