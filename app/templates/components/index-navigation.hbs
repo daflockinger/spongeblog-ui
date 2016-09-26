@@ -1,7 +1,17 @@
-{{#paper-toolbar}}
-  <div class="md-toolbar-tools">
-    {{#each categories as |cat|}}
-      {{#paper-button}}{{cat.name}}{{/paper-button}}
-    {{/each}}
-  </div>
-{{/paper-toolbar}}
+
+<div class="navbar-fixed">
+<nav class="nav-wrapper">
+      <ul class="right hide-on-med-and-down">
+        {{#each categories as |cat|}}
+          <li><a href="#">{{cat.name}}</a></li>
+        {{/each}}
+      </ul>
+
+      <ul id="nav-mobile" class="side-nav" style="transform: translateX(-100%);">
+        {{#each categories as |cat|}}
+          <li><a href="#">{{cat.name}}</a></li>
+        {{/each}}
+      </ul>
+      <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>
+    </nav>
+</div>

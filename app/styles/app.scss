@@ -1,1 +1,32 @@
-@import 'ember-paper';
+// Fix for Roboto font path
+$roboto-font-path: '../assets/';
+
+
+@import 'components/color';
+
+
+// Custom color settings go here
+$primary-color: color("blue", "lighten-2");
+$secondary-color: color("blue","lighten-2");
+
+
+// Example app.scss
+@import 'components/variables';
+@import 'ember-cli-materialize';
+// Materialize styles
+@import "materialize";
+
+
+body {
+    background-size: cover;
+    background-attachment: fixed;
+    content: '';
+    will-change: transform;
+    z-index: -1;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+//    position: fixed;
+    background-image: url('images/background.JPG');
+}

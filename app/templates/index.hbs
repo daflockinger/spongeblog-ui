@@ -1,3 +1,55 @@
 {{index-navigation categories=sortedCategories}}
 
-{{outlet}}
+<div class="container center-align">
+<h2 class="white-text">Blog Title</h2>
+{{#each model.posts as |post|}}
+<div class="row">
+  <div class="col s12 m12 l12">
+    <div class="card">
+            <div class="card-content">
+              <span class="card-title">{{post.title}}</span>
+              <p>{{post.content}}</p>
+            </div>
+            <div class="card-action">
+              <a href="#">This is a link</a>
+            </div>
+          </div>
+  </div>
+</div>
+{{/each}}
+
+</div>
+ {{outlet}}
+<!--
+<div class="mdl-layout__container">
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+  {{index-navigation categories=sortedCategories}}
+      <main class="mdl-layout__content">
+
+      <div class="mdl-grid">
+        <div class="mdl-cell mdl-cell--4-col"></div>
+        <div class="mdl-cell mdl-cell--8-col">
+        {{#each model.posts as |post|}}
+        {{#paper-card}}
+          {{#paper-card-title}}
+            {{#paper-card-title-text}}
+            <h2>{{post.title}}</h2>
+            {{/paper-card-title-text}}
+          {{/paper-card-title}}
+          {{#paper-card-content}}
+          <p>
+          {{post.content}}
+          </p>
+          {{/paper-card-content}}
+        {{/paper-card}}
+        {{/each}}
+      </div>
+      </div>
+
+
+
+
+      </main>
+  </div>
+</div>
+-->
