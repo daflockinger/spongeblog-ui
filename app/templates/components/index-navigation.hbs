@@ -1,15 +1,14 @@
-
 <div class="navbar-fixed">
 <nav class="nav-wrapper">
       <ul class="right hide-on-med-and-down">
         {{#each categories as |cat|}}
-          <li><a href="#">{{cat.name}}</a></li>
+          <li>{{#link-to "page" cat.name}}{{cat.name}}{{/link-to}}</li>
         {{/each}}
       </ul>
 
       <ul id="nav-mobile" class="side-nav" style="transform: translateX(-100%);">
         {{#each categories as |cat|}}
-          <li><a href="#">{{cat.name}}</a></li>
+          <li>{{#link-to "page" cat.name}}{{cat.name}}{{/link-to}}</li>
         {{/each}}
       </ul>
       <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="material-icons">menu</i></a>

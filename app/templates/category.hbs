@@ -1,7 +1,9 @@
+
 {{index-navigation categories=sortedCategories}}
 <div class="container center-align">
-<h2 class="white-text">{{model.blog.firstObject.name}}</h2>
+<h2 class="white-text">{{model.blog.firstObject.name}} - {{model.parrams}}
+</h2>
 {{#each model.posts as |post|}}
-  {{category-post post=post}}
+{{category-post post=post}}
 {{/each}}
 </div>
