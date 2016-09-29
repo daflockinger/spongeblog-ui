@@ -3,7 +3,10 @@
     <div class="card">
             <div class="card-content">
               <span class="card-title"><h4>{{#link-to "post" post.id}}{{post.title}}{{/link-to}}</h4></span>
-              <small>by {{post.user}}</small>
+              <small>by {{post.user}}
+                {{#each post.keywords as |keyword|}}
+                {{#link-to "toKeyword" keyword}}{{keyword}} {{/link-to}}
+                {{/each}}</small>
               <p>{{post.content}}</p>
             </div>
             <div class="card-action">
