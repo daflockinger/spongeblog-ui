@@ -7,10 +7,12 @@ const Router = Ember.Router.extend({
 });
 
 Router.map(function() {
-  this.route('index', { path: '/' });
-  this.route('page', { path: '/:name'});
-  this.route('category', { path: '/:name/:page'});
+  this.route('toIndex', { path: '/' });
+  this.route('index', { path: '/:page' });
+  this.route('page', { path: '/category/:name'});
+  this.route('category', { path: '/category/:name/:page'});
   this.route('post', { path: '/post/:id'});
+
 });
 
 export default Router;

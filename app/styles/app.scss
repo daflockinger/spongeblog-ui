@@ -6,8 +6,22 @@ $roboto-font-path: '../assets/';
 
 
 // Custom color settings go here
-$primary-color: color("blue","lighten-1");
+//$primary-color: color("blue","lighten-1");
 //$secondary-color: color("red","lighten-2");
+$primary-color: color("blue", "lighten-2") !default;
+$primary-color-light: false !default;
+$primary-color-dark: false !default;
+@if not $primary-color-light {
+  $primary-color-light: lighten($primary-color, 15%);
+}
+@if not $primary-color-dark {
+  $primary-color-dark: darken($primary-color, 15%);
+}
+$secondary-color: color("amber", "darken-1") !default;
+$success-color: color("green", "base") !default;
+$error-color: color("red", "base") !default;
+
+$link-color: color("amber", "darken-2") !default;
 
 
 // Example app.scss
@@ -16,17 +30,8 @@ $primary-color: color("blue","lighten-1");
 // Materialize styles
 @import "materialize";
 
-
-body {
-    background-size: cover;
-    background-attachment: fixed;
-    content: '';
-    will-change: transform;
-    z-index: -1;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    top: 0;
-//    position: fixed;
-    background-image: url('images/background.JPG');
+.blog-header{
+  top:100px;
+  position:absolute;
+  width:100%;
 }

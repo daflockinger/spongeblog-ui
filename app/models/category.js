@@ -7,5 +7,6 @@ export default DS.Model.extend({
     "name":attr('string'),
     "parentCategory":attr('string'),
     "childCategories":attr('string'),
-    "rank":attr('number')
+    "rank":attr('number'),
+    "sideCategory":attr('boolean')
 });

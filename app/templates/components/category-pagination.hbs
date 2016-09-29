@@ -1,0 +1,20 @@
+<div class="row">
+
+<div class="col s12 m12 l12">
+  <p class="left-align">
+{{#if hasPreviousPage}}
+{{#link-to "category" previousPage class="waves-effect waves-light btn-large amber"}}
+Previous
+{{/link-to}}
+{{/if}}
+</p>
+  <p class="right-align">
+{{#if hasNextPage}}
+{{#link-to "category" nextPage class="waves-effect waves-light btn-large amber"}}
+Next
+{{/link-to}}
+{{/if}}
+</p>
+</div>
+
+</div>

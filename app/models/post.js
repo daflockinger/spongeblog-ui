@@ -10,5 +10,7 @@ export default DS.Model.extend({
   "content":attr('string'),
   "postStatus":attr('string'),
   "keywords":attr(),
-  "category":attr('string')
+  "category":attr('string'),
+  "noPost":attr('boolean'),
+  "hasPreviousPage":attr('boolean')
 });
