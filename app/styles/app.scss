@@ -1,1 +1,37 @@
-@import 'ember-paper';
+// Fix for Roboto font path
+$roboto-font-path: '../assets/';
+
+
+@import 'components/color';
+
+
+// Custom color settings go here
+//$primary-color: color("blue","lighten-1");
+//$secondary-color: color("red","lighten-2");
+$primary-color: color("blue", "lighten-2") !default;
+$primary-color-light: false !default;
+$primary-color-dark: false !default;
+@if not $primary-color-light {
+  $primary-color-light: lighten($primary-color, 15%);
+}
+@if not $primary-color-dark {
+  $primary-color-dark: darken($primary-color, 15%);
+}
+$secondary-color: color("amber", "darken-1") !default;
+$success-color: color("green", "base") !default;
+$error-color: color("red", "base") !default;
+
+$link-color: color("amber", "darken-2") !default;
+
+
+// Example app.scss
+@import 'components/variables';
+@import 'ember-cli-materialize';
+// Materialize styles
+@import "materialize";
+
+.blog-header{
+  top:100px;
+  position:absolute;
+  width:100%;
+}

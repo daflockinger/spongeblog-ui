@@ -1,0 +1,21 @@
+{{index-navigation categories=model.categories}}
+<div class="container center-align" style="min-height:1000px;">
+  <div class="row">
+    <div class="col s12 m12 l12">
+      <h2 class="white-text">{{model.post.title}}</h2>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col s12 m12 l12">
+      <div class="card">
+              <div class="card-content">
+                <p class="flow-text">{{model.post.content}}</p>
+              </div>
+              <div class="card-action">
+                <a href="#">This is a link</a>
+              </div>
+      </div>
+    </div>
+  </div>
+</div>
+{{index-footer settings=model.blog.firstObject.settings categories=model.categories}}

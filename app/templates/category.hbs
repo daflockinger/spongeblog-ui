@@ -1,0 +1,11 @@
+
+{{index-navigation categories=model.categories}}
+<div class="container center-align" style="min-height:500px;">
+<h2 class="white-text">{{model.blog.firstObject.name}} - {{model.parrams}}
+</h2>
+{{#each model.posts as |post|}}
+{{category-post post=post}}
+{{/each}}
+{{category-pagination hasPreviousPage=model.posts.firstObject.hasPreviousPage page=model.page}}
+</div>
+{{index-footer settings=model.blog.firstObject.settings categories=model.categories}}

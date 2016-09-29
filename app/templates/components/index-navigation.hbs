@@ -1,7 +1,26 @@
-{{#paper-toolbar}}
-  <div class="md-toolbar-tools">
-    {{#each categories as |cat|}}
-      {{#paper-button}}{{cat.name}}{{/paper-button}}
-    {{/each}}
-  </div>
-{{/paper-toolbar}}
+<div  class="navbar-fixed">
+{{#md-navbar name=''}}
+
+  {{#each sortedCategories as |cat|}}
+    {{#unless cat.sideCategory}}
+    {{#link-to 'page' tagName='li'}}
+      {{#link-to "page" cat.name}}{{cat.name}}{{/link-to}}
+    {{/link-to}}
+
+    {{/unless}}
+  {{/each}}
+
+
+{{/md-navbar}}
+</div>
+
+
+<div class="parallax-container">
+  {{md-parallax image="http://localhost:4200/assets/images/background.JPG"}}
+      <div class="row blog-header">
+        <div class="col s12 m12 l12 center-align">
+        <h1 class="header center white-text">Test Blog</h1>
+          <h5 class="header col s12 white-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do</h5>
+        </div>
+      </div>
+</div>
