@@ -14,6 +14,8 @@ Router.map(function() {
   this.route('post', { path: '/post/:id'});
   this.route('toKeyword', { path: '/keyword/:keyword' });
   this.route('keyword', { path: '/keyword/:keyword/:page' });
+  this.route('login', { path: '/admin/login' });
+  this.route('admin', { path: '/admin/main' });
 });
 
 export default Router;
