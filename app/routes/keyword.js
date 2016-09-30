@@ -5,10 +5,10 @@ import RSVP from 'rsvp';
 export default Ember.Route.extend({
   model(params) {
     return RSVP.hash({
-      category: params.name,
+      keyword : params.keyword,
       page : params.page,
       posts: this.get('store').query('post', { page: params.page, limit: 5,
-        sort: 'created',orderasc:false, postStatus: 'PUBLIC', category: params.name}),
+        sort: 'created',orderasc:false, postStatus: 'PUBLIC', keywords: params.keyword}),
       categories: this.get('store').findAll('category'),
       blog: this.get('store').findAll('blog')
   });
