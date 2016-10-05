@@ -14,9 +14,6 @@ export default Ember.Route.extend({
       blog: this.get('store').findAll('blog'),
       createdOnFormatted: format(locale(momentComputed('post.created'), 'moment.locale'), 'MMMM DD, YYYY'),
       createdFromNow: fromNow(momentComputed('post.created'), false),
-    /*  subtitle: Ember.computed('post', function() {
-        return this.get('post') /*+ this.get('createdOnFormatted') ;
-      }),*/
     });
   }
 });

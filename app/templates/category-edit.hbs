@@ -1,0 +1,80 @@
+{{admin-navigation}}
+<div class="container center-align">
+  <div class="row">
+    <div class="col s12">
+      <h2>Categories</h2>
+    </div>
+  </div>
+    <div class="row">
+      <div class="card col s12 m8 offset-m2 l8 offset-l2">
+        <table>
+        <thead>
+          <tr>
+            <th data-field="name">Name</th>
+            <th data-field="rank">Rank</th>
+          <!--  <th data-field="price">Parent Category</th>-->
+            <th data-field="sideCategory">Is side category</th>
+            <th></th>
+            <td></td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div class="input-field">
+                {{input value=newCategory.name type="text"  data-error="right" class="validate"}}
+              </div>
+            </td>
+            <td class="center-align">
+              <div class="input-field">
+                {{input value=newCategory.rank type="number"  data-error="right" class="validate"}}
+              </div>
+            </td>
+            <td>
+              <div class="input-field">
+                {{md-check name="" checked=newCategory.sideCategory}}
+              </div>
+            </td>
+            <td>
+              <button class="btn waves-effect waves-light" type="button"
+                {{action "insert" newCategory on="mouseUp"}}>
+                <i class="fa fa-plus" aria-hidden="true" title="Add"></i>
+              </button>
+            </td>
+            <td></td>
+          </tr>
+        {{#each model as |category|}}
+          <tr>
+            <td>
+              {{category.name}}
+            </td>
+            <td>
+              <div class="input-field">
+                {{input value=category.rank type="number"  data-error="right" class="validate"}}
+              </div>
+            </td>
+        <!--    <td>{{category.parentCategory}}</td> -->
+            <td>
+              <div class="input-field">
+                {{md-check name="" checked=category.sideCategory}}
+              </div>
+            </td>
+            <td>
+              <button class="btn waves-effect waves-light" type="button"
+                {{action "update" category on="mouseUp"}}>
+                <i class="fa fa-floppy-o " aria-hidden="true"  title="Save"></i>
+              </button>
+            </td>
+            <td>
+              <button class="btn waves-effect waves-light" type="button"
+                {{action "remove" category on="mouseUp"}}>
+                <i class="fa fa-trash " aria-hidden="true"  title="Remove"></i>
+              </button>
+            </td>
+          </tr>
+        {{/each}}
+      </tbody>
+      </table>
+    </div>
+  </div>
+</div>
