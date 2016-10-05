@@ -1,0 +1,51 @@
+<h4>{{#if user.id}}Edit{{else}}Add{{/if}} User</h4>
+<form>
+  <div class="row">
+    <div class="input-field col s12 m12 l12">
+      {{input value=user.login type="text"  data-error="right" class="validate"}}
+      <label for="login" class="active">Login</label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-field col s12 m12 l12">
+      {{input value=user.password type="password"  data-error="right" class="validate"}}
+      <label for="user" class="active">Password</label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-field col s12 m12 l12">
+      {{input value=user.nickname type="text"  data-error="right" class="validate"}}
+      <label for="user" class="active">Nickname</label>
+    </div>
+  </div>
+  <div class="row">
+    <div class="input-field col s12 m12 l12">
+      {{input value=user.email type="email"  data-error="right" class="validate"}}
+      <label for="user" class="active">Email</label>
+    </div>
+  </div>
+  <div class="row">
+      {{md-input-date label='Registered date' value=user.registered class="col s12 m6 l6" readonly="readonly"}}
+      {{md-select value=user.userStatus
+          label="Status"
+          content=userStatuses
+          class="col col s12 m6 l6"}}
+  </div>
+  <div class="row">
+    <div class="col s12">
+      {{#if user.id}}
+      <button class="btn waves-effect waves-light col s3 left" type="button"
+        {{action "update" user on="mouseUp"}}>Update<i class="fa fa-floppy-o right" aria-hidden="true"></i>
+      </button>
+      <button class="btn waves-effect waves-light col s3 right" type="button"
+        {{action "remove" user on="mouseUp"}}>Remove
+        <i class="fa fa-trash right" aria-hidden="true"></i>
+      </button>
+      {{else}}
+      <button class="btn waves-effect waves-light col s3 left" type="button"
+        {{action "insert" user on="mouseUp"}}>Add<i class="fa fa-plus right" aria-hidden="true"></i>
+      </button>
+      {{/if}}
+    </div>
+  </div>
+</form>

@@ -6,6 +6,8 @@ export default DS.Model.extend({
   "password":attr('string'),
   "nickname":attr('string'),
   "email":attr('string'),
-  "registered":attr('date'),
+  "registered":attr('date',{
+    defaultValue() { return new Date(); }
+  }),
   "userStatus":attr('string')
 });

@@ -6,7 +6,7 @@ export default DS.Model.extend({
     "errorMessage":attr('string'),
     "name":attr('string'),
     "parentCategory":attr('string'),
-    "childCategories":attr('string'),
+  //  "childCategories":attr('string'),
     "rank":attr('number'),
     "sideCategory":attr('boolean')
 });

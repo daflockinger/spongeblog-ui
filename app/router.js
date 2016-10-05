@@ -16,6 +16,9 @@ Router.map(function() {
   this.route('keyword', { path: '/keyword/:keyword/:page' });
   this.route('login', { path: '/admin/login' });
   this.route('admin', { path: '/admin/main' });
+  this.route('user-edit');
+  this.route('category-edit');
+  this.route('keyword-edit');
 });
 
 export default Router;

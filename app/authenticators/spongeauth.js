@@ -8,7 +8,7 @@ const assign = emberAssign || merge;
 export default Base.extend({
   //should propably check session data if it's kinda valid or just not
   restore(data) {
-    console.log('I think my session is dead, but who cares: ' + Json.stringify(data));
+    console.log('I think my session is dead, but who cares:' + data);
     return RSVP.resolve();
   },
 
@@ -36,7 +36,7 @@ export default Base.extend({
   url: "http://localhost:9000/api/v1/login",
   data: JSON.stringify(data),
   contentType: "application/json"
-})
+});
   },
 
   //Don't need to change this! leave it as it is and done...
