@@ -27,7 +27,9 @@ export default Ember.Route.extend(AuthenticatedRouteMixin,{
                          //blog.set('',updateBlog.get(''));
                          blog.save();
                        });
+        Materialize.toast('Settings saved.',2500);
       this.refresh();
+
     },
   },
 });

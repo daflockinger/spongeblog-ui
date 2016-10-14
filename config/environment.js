@@ -6,6 +6,9 @@ module.exports = function(environment) {
     environment: environment,
     rootURL: '/',
     locationType: 'auto',
+  /*  disqus: {   TODO activate someday
+      shortname: 'add-my-forum-name-here'
+    },*/
     materializeDefaults: {
       modalIsFooterFixed:  false,
       buttonIconPosition:  'left',

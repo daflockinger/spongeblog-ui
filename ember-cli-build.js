@@ -11,6 +11,13 @@ module.exports = function(defaults) {
         'bower_components/materialize/sass'
       ],
       nodeSass: nodeSass // Workaround for ember-cli-sass bug https://github.com/aexmachina/ember-cli-sass/issues/117
+    },
+    'ember-cli-trubowyg': {
+      // array of language names
+      langs: ['de'],
+      // array of plugin names
+      plugins: ['colors','upload','base64','noembed',
+      'preformatted','pasteimage'],
     }
   });
 

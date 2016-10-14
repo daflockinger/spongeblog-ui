@@ -19,6 +19,8 @@ Router.map(function() {
   this.route('user-edit');
   this.route('category-edit');
   this.route('keyword-edit');
+  this.route('post-edit-list',{path: '/post-edit-list/:page'});
+  this.route('post-edit',{path: '/post-edit/:id'});
 });
 
 export default Router;

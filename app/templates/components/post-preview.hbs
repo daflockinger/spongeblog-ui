@@ -1,0 +1,22 @@
+<style>
+.parallax-container{
+/*  height:250px;*/
+}
+</style>
+{{#index-header title=post.title}}
+{{post.user}} / {{moment-format post.created "MMMM DD, YYYY"}} / {{#each post.keywords as |keyword|}}
+  {{#link-to "toKeyword" keyword}}{{keyword}} {{/link-to}}
+  {{/each}}
+{{/index-header}}
+  <div class="row">
+    <div class="col s12 m12 l12">
+      <div class="card">
+              <div class="card-content">
+                <p class="flow-text">
+                  {{{post.content.content}}}</p>
+              </div>
+              <div class="card-action">
+              </div>
+      </div>
+    </div>
+  </div>

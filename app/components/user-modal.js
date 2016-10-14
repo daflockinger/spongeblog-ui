@@ -49,6 +49,7 @@ export default Ember.Component.extend({
                          user.set('email',updatedUser.get('email'));
                          user.save();
                        });
+      Materialize.toast('User updated.',2500);              
       this.refresh();
     },
 
