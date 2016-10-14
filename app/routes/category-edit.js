@@ -1,6 +1,8 @@
 import Ember from 'ember';
+import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin';
 
-export default Ember.Route.extend({
+
+export default Ember.Route.extend(AuthenticatedRouteMixin,{
   model() {
     return this.get('store').findAll('category');
   },
@@ -47,6 +49,7 @@ export default Ember.Route.extend({
                          //category.set('childCategories',[]);
                          category.save();
                        });
+      Materialize.toast('Category updated.',2500);
       this.refresh();
     },
 

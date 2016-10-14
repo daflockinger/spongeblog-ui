@@ -6,6 +6,7 @@ const assign = emberAssign || merge;
 
 
 export default Base.extend({
+  session: Ember.inject.service('session'),
   //should propably check session data if it's kinda valid or just not
   restore(data) {
     console.log('I think my session is dead, but who cares:' + data);
@@ -15,6 +16,7 @@ export default Base.extend({
   authenticate(user, password) {
     return new Promise((resolve, reject) => {
     const data = {user: user, password: password};
+    this.get('session').set('data.user', user);
 
     return this.makeRequest(data).then(
         (response) => {
