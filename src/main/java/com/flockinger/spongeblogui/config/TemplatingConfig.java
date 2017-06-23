@@ -1,0 +1,9 @@
+package com.flockinger.spongeblogui.config;
+
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class TemplatingConfig {
+
+	
+}
