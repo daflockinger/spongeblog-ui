@@ -1,0 +1,30 @@
+<header th:fragment="navbar">
+	<div class="navbar-fixed">
+		<nav>
+			<div class="nav-wrapper container">
+				<!-- NAV DESKTOP -->
+				<ul class="right hide-on-med-and-down">
+					<li><a href="#" th:href="@{/admin/posts}">Posts</a></li>
+					<li><a href="#" th:href="@{/admin/settings}">Settings</a></li>
+					<li><a href="#" th:href="@{/admin/users}">Users</a></li>
+					<li><a href="#" th:href="@{/admin/categories}">Categories</a></li>
+					<li><a href="#" th:href="@{/admin/tags}">Tags</a></li>
+					<li><a href="#" th:href="@{/admin/logout}">Logout</a></li>
+				</ul>
+				<!-- NAV DESKTOP -->
+				<!-- NAV MOBILE -->
+				<ul class="side-nav" id="mobile-demo">
+					<li><a href="#" th:href="@{/admin/posts}">Posts</a></li>
+					<li><a href="#" th:href="@{/admin/settings}">Settings</a></li>
+					<li><a href="#" th:href="@{/admin/users}">Users</a></li>
+					<li><a href="#" th:href="@{/admin/categories}">Categories</a></li>
+					<li><a href="#" th:href="@{/admin/tags}">Tags</a></li>
+					<li><a href="#" th:href="@{/admin/logout}">Logout</a></li>
+				</ul>
+				<a href="#" data-activates="mobile-demo" class="button-collapse"><i
+					class="material-icons">menu</i></a>
+				<!-- NAV MOBILE -->
+			</div>
+		</nav>
+	</div>
+</header>

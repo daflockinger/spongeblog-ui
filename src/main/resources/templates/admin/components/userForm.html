@@ -1,0 +1,55 @@
+<div class="row" th:fragment="user-form">
+	<form class="col s12 user-form" action="#" method="post" th:id="'form-user-' + ${user.login}">
+		<div class="row">
+			<div class="input-field col s6">
+				<input placeholder="Placeholder" name="login" th:value="${user.login}" type="text" class="validate" required="" aria-required="true"/> 
+				<label for="login">Login</label>
+			</div>
+			<div class="input-field col s6">
+				<input type="text" name="nickName" th:value="${user.nickName}" class="validate" required="" aria-required="true"/> 
+				<label for="nickName">Nick name</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field col s12">
+				<input name="password" type="password" class="validate" th:if="${user.id}"/> 
+				<input name="password" type="password" class="validate" th:unless="${user.id}" required="" aria-required="true"/> 
+				<label for="password">Password</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field col s12">
+				<input name="email" th:value="${user.email}" type="email" class="validate" required="" aria-required="true"/> 
+				<label for="email">Email</label>
+			</div>
+		</div>
+		<div class="row">
+			<div class="input-field col s12">
+				 <input type="date" class="datepicker" th:if="${user.registered}" th:value="${#dates.format(user.registered,'yyyy-MM-dd')}" name="registered" required="" aria-required="true"/>
+				 <input type="date" class="datepicker" th:unless="${user.registered}" name="registered" required="" aria-required="true"/>
+				<label for="registered">Registered Date</label>
+			</div>
+		</div>	
+		<div class="row">
+			<div class="input-field col s12">
+				<p th:each="userRole,iter : ${userRoles}">
+      				<input type="checkbox" th:name="roles[]" th:value="${userRole}" th:checked="${#lists.contains(user.roles, userRole)}" th:id="${user.userId} + 'user.roles[' + ${iter.index} +']'"/>
+      				<label th:for="${user.userId} + 'user.roles[' + ${iter.index} +']'" th:text="${userRole}"></label>
+    			</p>
+			</div>
+		</div>	
+		<input type="hidden" name="userId" th:value="${user.userId}"/>
+		<div class="row">
+					<div class="col s6 left">
+						<button class="btn waves-effect waves-light col s12 user-save" type="submit" th:name="'form-user-' + ${user.login}">
+							Save <i class="fa fa-floppy-o right" aria-hidden="true"></i>
+						</button>
+					</div>
+					<div class="col s6 right"  th:if="${user.id}">
+						<button class="btn waves-effect waves-light col s12 user-delete" type="button" th:name="${user.userId}">
+							Delete <i class="fa fa-trash right" aria-hidden="true"></i>
+						</button>
+					</div>
+		  </div>
+	</form>
+</div>

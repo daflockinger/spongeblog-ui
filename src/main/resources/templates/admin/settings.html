@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="admin/components/head :: head"></head>
+<body>
+	<header th:replace="admin/components/navbar :: navbar"></header>
+
+
+
+	<main>
+	<div class="container center">
+		<!-- CONTENT -->
+		<div class="container center-align">
+			<div class="row">
+				<div class="col s12">
+					<h2>Blog Settings</h2>
+				</div>
+			</div>
+
+			<form id="settings-form" action="#" th:action="@{/admin/settings}"
+				method="post">
+				<div class="row">
+					<div class="card col s12 m8 offset-m2 l8 offset-l2">
+						<div class="card-content">
+							<span class="card-title">General Settings</span>
+
+
+							<div class="row">
+								<div class="input-field col s12">
+									<input type="text" th:value="${blog['name']}" class="validate"
+										id="name" name="name" /> <label for="title">Blog Name</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="input-field col s12">
+									<input type="text" th:value="${blog['title']}" class="validate"
+										id="title" name="title" /> <label for="title">Blog
+										Title</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="input-field col s12">
+									<select name="status">
+										<option th:unless="${#maps.containsKey(blog,'status')}"
+											value="" disabled="disabled" selected="selected">Choose
+											your option</option>
+										<option th:each="displayStatus : ${blogStatus}"
+											th:value="${displayStatus}" th:text="${displayStatus}"
+											th:selected="${blog['status']} == ${displayStatus}"></option>
+									</select> <label>Select Blog Status</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="input-field col s12">
+									<input type="text" th:value="${blog['subtitle']}"
+										class="validate" id="subtitle" name="subtitle" /> <label
+										for="subtitle">Subtitle</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="input-field col s12">
+									<input type="text" th:value="${blog['bgImage']}"
+										class="validate" id="bg-image" name="bg-image" /> <label
+										for="bg-image">Background image URL</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="input-field col s12">
+									<textarea id="copyright" class="materialize-textarea"
+										th:text="${blog['copyright']}" name="copyright"></textarea>
+									<label for="copyright">Copyright</label>
+								</div>
+							</div>
+
+
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="card col s12 m8 offset-m2 l8 offset-l2">
+						<div class="card-content">
+							<span class="card-title">Social</span>
+							<div class="row">
+								<div class="input-field col s12 m6 l6">
+									<input type="text" th:value="${blog['socialTwitter']}"
+										class="validate" id="socialTwitter" name="socialTwitter" /> <label
+										for="socialTwitter">Twitter link</label>
+								</div>
+								<div class="input-field col s12 m6 l6">
+									<input type="text" th:value="${blog['socialFacebook']}"
+										class="validate" id="socialFacebook" name="socialFacebook" />
+									<label for="socialFacebook">Facebook link</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="input-field col s12 m6 l6">
+									<input type="text" th:value="${blog['socialInstagram']}"
+										class="validate" id="socialInstagram" name="socialInstagram" />
+									<label for="socialInstagram">Instagram link</label>
+								</div>
+								<div class="input-field col s12 m6 l6">
+									<input type="text" th:value="${blog['socialReddit']}"
+										class="validate" id="socialReddit" name="socialReddit" /> <label
+										for="socialReddit">Reddit link</label>
+								</div>
+							</div>
+							<div class="row">
+								<div class="input-field col s12 m6 l6">
+									<input type="text" th:value="${blog['socialGoogle']}"
+										class="validate" id="socialGoogle" name="socialGoogle" /> <label
+										for="socialGoogle">Google+ link</label>
+								</div>
+								<div class="input-field col s12 m6 l6">
+									<input type="text" th:value="${blog['socialYoutube']}"
+										class="validate" id="socialYoutube" name="socialYoutube" /> <label
+										for="socialYoutube">Youtube link</label>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col s2 offset-s5">
+						<button id="settings-store"
+							class="btn waves-effect waves-light col s12" type="button">
+							Save <i class="fa fa-floppy-o right" aria-hidden="true"></i>
+						</button>
+					</div>
+				</div>
+			</form>
+		</div>
+		<!-- CONTENT -->
+	</div>
+	</main>
+
+
+
+	<!--  Scripts-->
+	<script src="https://code.jquery.com/jquery-2.1.1.min.js"
+		th:src="@{/webjars/jquery/jquery.min.js}"></script>
+	<script src="../static/js/materialize.min.js"
+		th:src="@{/js/materialize.min.js}"></script>
+	<script type="text/javascript">	
+		$(document).ready(function() {
+			$('.parallax').parallax();
+
+			$(".button-collapse").sideNav();
+			$('select').material_select();
+
+			$("#settings-store").on('click', function() {
+				// send ajax
+				$.ajax({
+					url : '/admin/settings', // url where to submit the request
+					type : "POST", // type of action POST || GET
+					//dataType : 'json', // data type
+					contentType : 'application/x-www-form-urlencoded',
+					data : $("#settings-form").serialize(), // post data || get data
+					success : function(result) {
+						Materialize.toast('<i class="material-icons">done</i>Settings saved.', 2000,'green rounded');
+					},
+					error : function(xhr, resp, text) {
+						var errorMessage = 'Name ' + $.parseJSON(xhr.responseText).fields.name;
+						Materialize.toast('<i class="material-icons">error</i>' + errorMessage, 5000,'red rounded');
+					}
+				})
+			});
+		});
+	</script>
+</body>
+</html>

@@ -1,3 +1,12 @@
+spring:
+  thymeleaf:
+    cache: false
+  jackson:
+    date-format: com.fasterxml.jackson.databind.util.ISO8601DateFormat
+
+spongeblog:
+  client:
+    url: http://localhost:8081/api/v1/
 
 security:
   basic:
@@ -5,3 +14,8 @@ security:
 management:
   security:
     enabled: false
+    
+blog:
+  paging:
+    default-page: 0
+    default-items-per-page: 5
