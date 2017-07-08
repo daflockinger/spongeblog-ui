@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.EnumUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,7 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import com.flockinger.spongeblogui.resource.dto.BlogStatus;
@@ -24,7 +24,6 @@ import com.flockinger.spongeblogui.resource.dto.TagDTO;
 import com.flockinger.spongeblogui.resource.dto.UserEditDTO;
 import com.flockinger.spongeblogui.resource.dto.UserRole;
 import com.flockinger.spongeblogui.service.AdminService;
-import com.google.common.util.concurrent.Service;
 
 @Controller
 @RequestMapping("/admin")
@@ -39,6 +38,9 @@ public class AdminController {
 	private final static String USERS_NAME = "users";
 	private final static String USER_ROLES = "userRoles";
 	private final static String BLOG_STATUSES = "blogStatus";
+	
+	private static Logger logger = Logger.getLogger(AdminController.class.getName());
+
 	
 	@Autowired
 	private AdminService adminService;
@@ -58,11 +60,8 @@ public class AdminController {
 	
 	@RequestMapping(value={"/users"},method=RequestMethod.GET)
 	public String getUsersView(Model model) {
-		List<UserEditDTO> users = new ArrayList<>();
-		users.add(new UserEditDTO());
-		users.addAll(adminService.getUsers());
-		model.addAttribute(USERS_NAME,users);
-		model.addAttribute(USER_ROLES, EnumUtils.getEnumList(UserRole.class)/*enumToNameList(UserRole.class)*/);
+		model.addAttribute(USERS_NAME,addEmptyItemToList(adminService.getUsers(),UserEditDTO.class));
+		model.addAttribute(USER_ROLES, EnumUtils.getEnumList(UserRole.class));
 		return "/admin/users";
 	}
 	
@@ -102,14 +101,14 @@ public class AdminController {
 	
 	@RequestMapping(value={"/categories/{categoryId}"},method=RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
-	public void deleteCategory(@RequestParam(required=true) Long categoryId) {
+	public void deleteCategory(@PathVariable(required=true) Long categoryId) {
 		adminService.deleteCategory(categoryId);
 	}
 	
 	
 	@RequestMapping(value={"/tags"},method=RequestMethod.GET)
 	public String getTagsView(Model model) {
-		model.addAttribute(TAGS_NAME, adminService.getTags());
+		model.addAttribute(TAGS_NAME, addEmptyItemToList(adminService.getTags(),TagDTO.class));
 		return "/admin/tags";
 	}
 	
@@ -126,8 +125,20 @@ public class AdminController {
 	
 	@RequestMapping(value={"/tags/{tagId}"},method=RequestMethod.DELETE)
 	@ResponseStatus(HttpStatus.OK)
-	public void deleteTag(@RequestParam(required=true) Long tagId) {
+	public void deleteTag(@PathVariable(required=true) Long tagId) {
 		adminService.deleteTag(tagId);
+	}
+	
+	private <T> List<T> addEmptyItemToList(List<T> entities,Class<T> entity){
+		List<T> extendedEntities = new ArrayList<>();
+		try {
+			extendedEntities.add(entity.newInstance());
+		} catch (InstantiationException | IllegalAccessException e) {
+			logger.error("Entity must have a no args constructor!",e);
+		} finally {
+			extendedEntities.addAll(entities);
+		}
+		return extendedEntities;
 	}
 	
 	private <E extends Enum<E>> List<String> enumToNameList(Class<E> enumClass){

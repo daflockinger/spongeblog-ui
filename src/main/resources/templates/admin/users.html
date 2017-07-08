@@ -78,12 +78,12 @@
 				}
 				formData.registered = new Date(formData.registered);
 
-				save(formData,'/admin/users');
+				save(formData,'/admin/users','User');
 			});
 				
 			$(".user-delete").on('click', function() {
 				var userId = $(this).attr('name');
-				remove(userId,'/admin/users/');
+				remove(userId,'/admin/users/','User');
 			});
 		});
 	</script>
