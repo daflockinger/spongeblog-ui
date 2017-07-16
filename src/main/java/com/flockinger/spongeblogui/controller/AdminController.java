@@ -14,7 +14,6 @@ import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -34,9 +33,6 @@ public class AdminController {
 	private final static String CATEGORIES_NAME = "categories";
 	private final static String TOP_CATEGORIES = "topCategories";
 	private final static String TAGS_NAME = "tags";
-	private final static String POST_PREVIEWS_NAME = "previews"; 
-	private final static String POST_NAME = "post";
-	private final static String PAGINATION_NAME = "pagination";
 	private final static String USERS_NAME = "users";
 	private final static String USER_ROLES = "userRoles";
 	private final static String BLOG_STATUSES = "blogStatus";

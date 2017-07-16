@@ -18,6 +18,4 @@ public class SecurityConfig {
 	public Principal user(Principal principal) {
 		return principal;
 	}
-	
-	
 }

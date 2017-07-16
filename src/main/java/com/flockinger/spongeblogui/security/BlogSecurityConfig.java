@@ -1,93 +1,98 @@
 package com.flockinger.spongeblogui.security;
 
+import java.util.Arrays;
+
 import javax.servlet.Filter;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.AuthoritiesExtractor;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.ResourceServerProperties;
-import org.springframework.boot.autoconfigure.security.oauth2.resource.UserInfoTokenServices;
-import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.oauth2.client.OAuth2ClientContext;
 import org.springframework.security.oauth2.client.OAuth2RestTemplate;
-import org.springframework.security.oauth2.client.filter.OAuth2ClientAuthenticationProcessingFilter;
 import org.springframework.security.oauth2.client.filter.OAuth2ClientContextFilter;
+import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
-import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
+import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 
 @Profile("default")
 @Configuration
 @EnableWebSecurity
 public class BlogSecurityConfig extends WebSecurityConfigurerAdapter {
 
+	   @Value("${google.client.clientId}")
+	    private String clientId;
+	 
+	    @Value("${google.client.clientSecret}")
+	    private String clientSecret;
+	 
+	    @Value("${google.client.accessTokenUri}")
+	    private String accessTokenUri;
+	 
+	    @Value("${google.client.userAuthorizationUri}")
+	    private String userAuthorizationUri;
+	 
+	    @Value("${google.redirectUri}")
+	    private String redirectUri;
+	
 	@Autowired
 	OAuth2ClientContext oauth2ClientContext;
 
-	@Autowired
-	AuthoritiesExtractor authoritiesExtractor;
+    @Autowired
+    AuthenticationManager authenticationManager;
 
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+    	web
+    	.ignoring().antMatchers(HttpMethod.GET, "/category/**").and()
+    	.ignoring().antMatchers(HttpMethod.GET, "/user/**").and()
+    	.ignoring().antMatchers(HttpMethod.GET, "/tag/**").and()
+    	.ignoring().antMatchers(HttpMethod.GET, "/post/**").and()
+    	.ignoring().antMatchers(HttpMethod.GET, "/");
+    }
+    
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
-				// .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED).and()
-				// .addFilterAfter(new OAuth2ClientContextFilter(),
-				// AbstractPreAuthenticatedProcessingFilter.class)
-				// .addFilterAfter(filter,
-				// OAuth2ClientContextFilter.class)
-				// .httpBasic()
-				// .authenticationEntryPoint(new
-				// LoginUrlAuthenticationEntryPoint("/google-login"))
-				// .and()
-				.authorizeRequests().antMatchers(HttpMethod.GET, "/admin/login").permitAll()
+				.addFilterAfter(new OAuth2ClientContextFilter(),AbstractPreAuthenticatedProcessingFilter.class)
+				.addFilterAfter(ssoFilter(), OAuth2ClientContextFilter.class)
+				.httpBasic()
+				.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"))
+				.and()
+				.authorizeRequests().antMatchers(HttpMethod.GET, "/login").permitAll()
 				.antMatchers(HttpMethod.GET, "/admin/**").hasAnyAuthority("ADMIN", "AUTHOR")
 				.antMatchers(HttpMethod.POST, "/admin/**").hasAnyAuthority("ADMIN", "AUTHOR")
 				.antMatchers(HttpMethod.PUT, "/admin/**").hasAnyAuthority("ADMIN", "AUTHOR")
 				.antMatchers(HttpMethod.DELETE, "/admin/**").hasAnyAuthority("ADMIN", "AUTHOR")
-				.antMatchers(HttpMethod.GET, "/**").permitAll().and().logout().logoutSuccessUrl("/").permitAll().and()
-				.addFilterBefore(ssoFilter(), BasicAuthenticationFilter.class)
+				.and().logout().logoutUrl("/admin/logout").logoutSuccessUrl("/").permitAll().and()
 		        .csrf();
 	}
-
+	
 	private Filter ssoFilter() {
-		OAuth2ClientAuthenticationProcessingFilter filter = new OAuth2ClientAuthenticationProcessingFilter(
-				"/admin/login");
-		OAuth2RestTemplate template = new OAuth2RestTemplate(github(), oauth2ClientContext);
+		OpenIdFilter filter = new OpenIdFilter("/login", authenticationManager);
+		OAuth2RestTemplate template = new OAuth2RestTemplate(google(), oauth2ClientContext);
 		filter.setRestTemplate(template);
-		UserInfoTokenServices tokenServices = new UserInfoTokenServices(githubResource().getUserInfoUri(),
-				github().getClientId());
-		tokenServices.setRestTemplate(template);
-		tokenServices.setAuthoritiesExtractor(authoritiesExtractor);
-		filter.setTokenServices(tokenServices);
-		
 		return filter;
 	}
-
-	@Bean
-	@ConfigurationProperties("github.client")
-	public AuthorizationCodeResourceDetails github() {
-		return new AuthorizationCodeResourceDetails();
-	}
-
-	@Bean
-	@ConfigurationProperties("github.resource")
-	public ResourceServerProperties githubResource() {
-		return new ResourceServerProperties();
-	}
-
-	@Bean
-	public FilterRegistrationBean oauth2ClientFilterRegistration(OAuth2ClientContextFilter filter) {
-		FilterRegistrationBean registration = new FilterRegistrationBean();
-		registration.setFilter(filter);
-		registration.setOrder(-100);
-		return registration;
-	}
+	
+    @Bean
+    public OAuth2ProtectedResourceDetails google() {
+        AuthorizationCodeResourceDetails details = new AuthorizationCodeResourceDetails();
+        details.setClientId(clientId);
+        details.setClientSecret(clientSecret);
+        details.setAccessTokenUri(accessTokenUri);
+        details.setUserAuthorizationUri(userAuthorizationUri);
+        details.setScope(Arrays.asList("openid", "email"));
+        details.setPreEstablishedRedirectUri(redirectUri);
+        details.setUseCurrentUri(false);
+        return details;
+    }
 }

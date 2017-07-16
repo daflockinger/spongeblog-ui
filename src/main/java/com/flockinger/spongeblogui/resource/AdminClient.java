@@ -34,8 +34,8 @@ public interface AdminClient {
 	BlogDTO updateBlog(@RequestBody BlogDTO blog);
 	
 	// User Entpoints
-	@RequestMapping(method = RequestMethod.GET, value = "users/name/{userName}")
-	BlogUserDetails getUserByName(@PathVariable("userName") String userName);
+	@RequestMapping(method = RequestMethod.GET, value = "users/email")
+	BlogUserDetails getUserByEmail(@RequestParam("address") String email);
 	@RequestMapping(method = RequestMethod.GET, value = "users/{userId}")
 	UserEditDTO getUser(@PathVariable("userId") Long userId);
 	@RequestMapping(method = RequestMethod.GET, value = "users")

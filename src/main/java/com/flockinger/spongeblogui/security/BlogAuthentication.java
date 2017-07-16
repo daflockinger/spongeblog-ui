@@ -2,16 +2,12 @@ package com.flockinger.spongeblogui.security;
 
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.oauth2.common.OAuth2AccessToken;
 
-public class BlogAuthorization implements Authentication {
+public class BlogAuthentication implements Authentication {
 
 	/**
 	* 
@@ -25,7 +21,7 @@ public class BlogAuthorization implements Authentication {
 	private String name;
 	private Collection<? extends GrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));;
 
-	public BlogAuthorization(Authentication authentication) {
+	public BlogAuthentication(Authentication authentication) {
 		this.principal = authentication.getPrincipal();
 		this.details = authentication.getDetails();
 		this.credentials = authentication.getCredentials();
