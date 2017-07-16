@@ -3,6 +3,7 @@ package com.flockinger.spongeblogui.resource;
 import java.util.List;
 
 import org.springframework.cloud.netflix.feign.FeignClient;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import static com.flockinger.spongeblogui.config.BlogConstants.*;
 import com.flockinger.spongeblogui.resource.dto.BlogDTO;
+import com.flockinger.spongeblogui.resource.dto.BlogUserDetails;
 import com.flockinger.spongeblogui.resource.dto.CategoryDTO;
 import com.flockinger.spongeblogui.resource.dto.PostDTO;
 import com.flockinger.spongeblogui.resource.dto.PostPreviewDTO;
@@ -32,6 +34,8 @@ public interface AdminClient {
 	BlogDTO updateBlog(@RequestBody BlogDTO blog);
 	
 	// User Entpoints
+	@RequestMapping(method = RequestMethod.GET, value = "users/name/{userName}")
+	BlogUserDetails getUserByName(@PathVariable("userName") String userName);
 	@RequestMapping(method = RequestMethod.GET, value = "users/{userId}")
 	UserEditDTO getUser(@PathVariable("userId") Long userId);
 	@RequestMapping(method = RequestMethod.GET, value = "users")

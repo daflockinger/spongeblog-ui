@@ -3,15 +3,13 @@ package com.flockinger.spongeblogui.service;
 import java.util.List;
 import java.util.Map;
 
+import com.flockinger.spongeblogui.dto.PostQuery;
 import com.flockinger.spongeblogui.exception.DtoValidationFailedException;
 import com.flockinger.spongeblogui.resource.dto.CategoryDTO;
 import com.flockinger.spongeblogui.resource.dto.PostDTO;
-import com.flockinger.spongeblogui.resource.dto.PostPreviewDTO;
-import com.flockinger.spongeblogui.resource.dto.PostStatus;
 import com.flockinger.spongeblogui.resource.dto.PostsPageDTO;
 import com.flockinger.spongeblogui.resource.dto.TagDTO;
 import com.flockinger.spongeblogui.resource.dto.UserEditDTO;
-import com.flockinger.spongeblogui.dto.Paging;
 
 public interface AdminService {
 	
@@ -36,11 +34,7 @@ public interface AdminService {
 	void updateTag(TagDTO tag);
 	void deleteTag(Long id);
 	
-	PostsPageDTO getAllPosts(Paging page);
-	PostsPageDTO getPostsByUser(Long userId, PostStatus status, Paging page);
-	PostsPageDTO getPostsByTag(Long tagId, PostStatus status, Paging page);
-	PostsPageDTO getPostsByCategory(Long categoryId, PostStatus status, Paging page);
-	PostsPageDTO getPostsByStatus(PostStatus status, Paging page);
+	PostsPageDTO getPostsByQuery(PostQuery query);
 	PostDTO getPost(Long id);
 	PostDTO createPost(PostDTO post);
 	void updatePost(PostDTO post);

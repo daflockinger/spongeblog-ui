@@ -1,6 +1,8 @@
 package com.flockinger.spongeblogui.dto;
 
-public class UserInfo {
+import com.flockinger.spongeblogui.controller.helper.Linkable;
+
+public class UserInfo implements Linkable {
 	private Long id;
 	private String name;
 	private String link;

@@ -10,13 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.flockinger.spongeblogui.dto.Paging;
+import com.flockinger.spongeblogui.dto.PostQuery;
 import com.flockinger.spongeblogui.exception.EntityIsNotExistingException;
 import com.flockinger.spongeblogui.resource.AdminClient;
 import com.flockinger.spongeblogui.resource.dto.BlogDTO;
 import com.flockinger.spongeblogui.resource.dto.BlogStatus;
 import com.flockinger.spongeblogui.resource.dto.CategoryDTO;
 import com.flockinger.spongeblogui.resource.dto.PostDTO;
-import com.flockinger.spongeblogui.resource.dto.PostPreviewDTO;
 import com.flockinger.spongeblogui.resource.dto.PostStatus;
 import com.flockinger.spongeblogui.resource.dto.PostsPageDTO;
 import com.flockinger.spongeblogui.resource.dto.TagDTO;
@@ -35,10 +35,10 @@ public class AdminServiceImpl implements AdminService {
 
 	@Override
 	public Map<String, String> getBlogSettings() {
-		Map<String,String> blog = new HashMap<>();
-		
+		Map<String, String> blog = new HashMap<>();
+
 		blog = mapBlog(client.getBlog());
-		
+
 		return blog;
 	}
 
@@ -55,12 +55,12 @@ public class AdminServiceImpl implements AdminService {
 
 	private boolean isBlogExisting() {
 		boolean isExisting = false;
-		
+
 		try {
 			client.getBlog();
 			isExisting = true;
 		} catch (EntityIsNotExistingException e) {
-			logger.error("No Blog is existing, please create!",e);
+			logger.error("No Blog is existing, please create!", e);
 		}
 		return isExisting;
 	}
@@ -161,37 +161,52 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public PostsPageDTO getAllPosts(Paging page) {
-		return client.getPosts(page.getPage(), page.getSize());
+	public PostsPageDTO getPostsByQuery(PostQuery query) {
+		PostsPageDTO postsPage = new PostsPageDTO();
+		
+		switch (query.getFilter()) {
+		case TAG:
+			postsPage = getPostsByTag(query.getId(), query.getStatus(),query.getPaging());
+			break;
+		case USER:
+			postsPage = getPostsByUser(query.getId(), query.getStatus(),query.getPaging());
+			break;
+		case CATEGORY:
+			postsPage = getPostsByCategory(query.getId(), query.getStatus(),query.getPaging());
+			break;
+		default:
+			postsPage = getAllPosts(query.getStatus(), query.getPaging());
+			break;
+		}
+		return postsPage;
 	}
 
-	@Override
-	public PostsPageDTO getPostsByUser(Long userId, PostStatus status, Paging page) {
-		if(status.equals(PostStatus.ALL)) {
+	private PostsPageDTO getAllPosts(PostStatus status, Paging page) {
+		if (status.equals(PostStatus.ALL)) {
+			return client.getPosts(page.getPage(), page.getSize());
+		}
+		return  client.getPostsByStatus(status.toString(), page.getPage(), page.getSize());
+	}
+
+	private PostsPageDTO getPostsByUser(Long userId, PostStatus status, Paging page) {
+		if (status.equals(PostStatus.ALL)) {
 			return client.getPostsByUser(userId, page.getPage(), page.getSize());
 		}
 		return client.getPostsByUserAndStatus(userId, status.toString(), page.getPage(), page.getSize());
 	}
 
-	@Override
-	public PostsPageDTO getPostsByTag(Long tagId, PostStatus status, Paging page) {
-		if(status.equals(PostStatus.ALL)) {
+	private PostsPageDTO getPostsByTag(Long tagId, PostStatus status, Paging page) {
+		if (status.equals(PostStatus.ALL)) {
 			return client.getPostsByTag(tagId, page.getPage(), page.getSize());
 		}
 		return client.getPostsByTagAndStatus(tagId, status.toString(), page.getPage(), page.getSize());
 	}
 
-	@Override
-	public PostsPageDTO getPostsByCategory(Long categoryId, PostStatus status, Paging page) {
-		if(status.equals(PostStatus.ALL)) {
+	private PostsPageDTO getPostsByCategory(Long categoryId, PostStatus status, Paging page) {
+		if (status.equals(PostStatus.ALL)) {
 			return client.getPostsByCategory(categoryId, page.getPage(), page.getSize());
 		}
 		return client.getPostsByCategoryAndStatus(categoryId, status.toString(), page.getPage(), page.getSize());
-	}
-
-	@Override
-	public PostsPageDTO getPostsByStatus(PostStatus status, Paging page) {
-		return client.getPostsByStatus(status.toString(), page.getPage(), page.getSize());
 	}
 
 	@Override

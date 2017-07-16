@@ -46,10 +46,11 @@
 						</button>
 					</div>
 					<div class="col s6 right"  th:if="${user.id}">
-						<button class="btn waves-effect waves-light col s12 user-delete" type="button" th:name="${user.userId}">
+						<button class="btn waves-effect waves-light col s12 user-delete" type="button" th:name="${user.userId}" th:attr="data-token=${_csrf.token}">
 							Delete <i class="fa fa-trash right" aria-hidden="true"></i>
 						</button>
 					</div>
 		  </div>
+		  <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 	</form>
 </div>

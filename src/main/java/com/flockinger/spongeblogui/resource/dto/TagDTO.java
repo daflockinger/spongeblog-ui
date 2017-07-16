@@ -1,12 +1,13 @@
 package com.flockinger.spongeblogui.resource.dto;
 
+import java.util.Objects;
+
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.hateoas.ResourceSupport;
 
 /**
  * TagDTO
  */
-
 public class TagDTO extends ResourceSupport {
 
 	private Long tagId = null;
@@ -38,5 +39,17 @@ public class TagDTO extends ResourceSupport {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		TagDTO otherTag = (TagDTO) o;
+		return Objects.equals(this.name, otherTag.name) && Objects.equals(this.tagId, otherTag.tagId);
 	}
 }

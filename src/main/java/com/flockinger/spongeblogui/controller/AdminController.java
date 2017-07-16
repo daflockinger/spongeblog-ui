@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -31,6 +32,7 @@ public class AdminController {
 
 	private final static String BLOG_SETTINGS_NAME = "blog";
 	private final static String CATEGORIES_NAME = "categories";
+	private final static String TOP_CATEGORIES = "topCategories";
 	private final static String TAGS_NAME = "tags";
 	private final static String POST_PREVIEWS_NAME = "previews"; 
 	private final static String POST_NAME = "post";
@@ -45,7 +47,7 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 	
-	@RequestMapping(value={"/settings"},method=RequestMethod.GET)
+	@RequestMapping(value={"","/settings"},method=RequestMethod.GET)
 	public String getSettingsView(Model model) {
 		model.addAttribute(BLOG_SETTINGS_NAME, adminService.getBlogSettings());
 		model.addAttribute(BLOG_STATUSES,enumToNameList(BlogStatus.class));
@@ -84,8 +86,14 @@ public class AdminController {
 	
 	@RequestMapping(value={"/categories"},method=RequestMethod.GET)
 	public String getCategoriesView(Model model) {
-		model.addAttribute(CATEGORIES_NAME,adminService.getCategories());
+		List<CategoryDTO> allCategories = adminService.getCategories();
+		model.addAttribute(CATEGORIES_NAME,addEmptyItemToList(allCategories,CategoryDTO.class));
+		model.addAttribute(TOP_CATEGORIES,getTopCategories(allCategories));
 		return "/admin/categories";
+	}
+	
+	private List<CategoryDTO> getTopCategories(List<CategoryDTO> allCategories) {
+		return allCategories.stream().filter(cat -> cat.getParentId() == null).collect(Collectors.toList());
 	}
 	
 	@RequestMapping(value={"/categories"},method=RequestMethod.POST)

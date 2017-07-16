@@ -291,7 +291,7 @@ public class BlogServiceSimpleTest {
 		UserInfoDTO user = new UserInfoDTO();
 		user.setEmail("a@b.cc");
 		user.setNickName("nick");
-		user.setRegistered(12l);
+		user.setRegistered(new Date(12l));
 		user.setUserId(12l);
 		testPost.setAuthor(user);
 		CategoryDTO category = new CategoryDTO();
@@ -321,7 +321,7 @@ public class BlogServiceSimpleTest {
 		UserInfoDTO user = new UserInfoDTO();
 		user.setEmail("a@b.cc");
 		user.setNickName("nick");
-		user.setRegistered(12l);
+		user.setRegistered(new Date(12l));
 		user.setUserId(12l);
 		testPost.setAuthor(user);
 		CategoryDTO category = new CategoryDTO();

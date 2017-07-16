@@ -1,5 +1,7 @@
 package com.flockinger.spongeblogui.resource.dto;
 
+import java.util.Date;
+
 import org.springframework.hateoas.ResourceSupport;
 
 /**
@@ -10,7 +12,7 @@ public class UserInfoDTO extends ResourceSupport {
 	private Long userId = null;
 	private String nickName = null;
 	private String email = null;
-	private Long registered = null;
+	private Date registered = null;
 
 	/**
 	 * Unique identifier.
@@ -56,11 +58,11 @@ public class UserInfoDTO extends ResourceSupport {
 	 * 
 	 * @return registered
 	 **/
-	public Long getRegistered() {
+	public Date getRegistered() {
 		return registered;
 	}
 
-	public void setRegistered(Long registered) {
+	public void setRegistered(Date registered) {
 		this.registered = registered;
 	}
 }

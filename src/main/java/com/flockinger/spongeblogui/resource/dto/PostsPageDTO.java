@@ -2,9 +2,9 @@ package com.flockinger.spongeblogui.resource.dto;
 
 import java.util.List;
 
-import com.flockinger.spongeblogui.dto.PreviewPost;
+import com.flockinger.spongeblogui.controller.helper.Navigable;
 
-public class PostsPageDTO {
+public class PostsPageDTO implements Navigable {
 	private List<PostPreviewDTO> previewPosts;
 	private Boolean hasNext;
 	private Boolean hasPrevious;
@@ -35,6 +35,4 @@ public class PostsPageDTO {
 	public void setTotalPages(Integer totalPages) {
 		this.totalPages = totalPages;
 	}
-	
-	
 }

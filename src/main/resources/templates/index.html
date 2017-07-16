@@ -35,7 +35,7 @@
               </p>
             </div>
             <div class="card-content">
-                <p th:text="${post.partContent}"></p> 
+                <p th:utext="${post.partContent}"></p> 
             </div>
             <div class="card-action">
               <a href="#" th:href="@{/post/{pathVariable}(pathVariable=${post.link})}">Read more...</a>

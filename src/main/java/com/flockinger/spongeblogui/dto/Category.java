@@ -2,7 +2,10 @@ package com.flockinger.spongeblogui.dto;
 
 import java.util.List;
 
-public class Category {
+import com.flockinger.spongeblogui.controller.helper.Linkable;
+import com.flockinger.spongeblogui.controller.helper.LinkableParent;
+
+public class Category implements LinkableParent<Category>, Linkable {
 	private Long id;
 	private String name;
 	private String link;

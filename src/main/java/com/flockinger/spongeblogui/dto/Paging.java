@@ -7,6 +7,9 @@ public class Paging {
 	private int size;
 	private String path;
 	
+	public Paging(){
+	}
+	
 	public Paging(Optional<Integer> page, int size, String path) {
 		this.path = path;
 		this.size = size;
@@ -16,6 +19,18 @@ public class Paging {
 		}
 	}
 	
+	public void setPage(int page) {
+		this.page = page;
+	}
+
+	public void setSize(int size) {
+		this.size = size;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
+	}
+
 	public String getPath() {
 		return path;
 	}

@@ -10,8 +10,128 @@
 <div class="container center">
 <!-- CONTENT -->   
     
-    
-    
+  <div class="row">
+    <div class="col s12">
+      <h2>Posts</h2>
+    </div>
+  </div>
+  
+   <div class="row">
+    <div class="col s12">
+      <ul class="tabs">
+        <li class="tab col s3"><a class="active" href="#post-list-tab">Post List</a></li>
+        <li id="edit-tab-button" class="tab col s3" style="display:none;"><a href="#edit-post-tab">Edit Post</a></li>
+      </ul>
+    </div>
+    <div id="post-list-tab" class="col s12">
+      <div class="row">
+      <div class="card col s12 m12 l12">
+      <div class="card-content">
+        <div class="row">
+          <div class="col s2 input-field">
+            <button class="btn waves-effect waves-light" type="button" onclick="newPost();">
+                Create new Post<i class="fa fa-plus right" aria-hidden="true"  title="Create Post"></i>
+            </button>
+          </div>
+           <div class="input-field col s3">
+            <select name="status" id="status">
+					<option th:each="status : ${statuses}"
+						th:value="${status}" th:text="${status}"></option>
+			</select>
+			<label>Post Status</label>
+		  </div>
+          <div class="input-field col s2">
+          <select name="query" id="query-selector">
+			<option value="all" selected="selected">All</option>
+			<option value="category">Category</option>
+			<option value="tag">Tag</option>
+			<option value="user">User</option>
+		  </select>
+		  <label>Filter by</label>
+          </div>
+          <div class="input-field col s4 filter-value" id="category-select" style="display:none;">
+            <select name="category" id="category">
+					<option selected="selected">ALL</option>
+					<option th:each="category : ${categories}"
+						th:value="${category.categoryId}" th:text="${category.name}"></option>
+			</select>
+		  </div>
+		  <div class="input-field col s4 filter-value" id="tag-select" style="display:none;">
+			<select name="tag" id="tag">
+					<option selected="selected">ALL</option>
+					<option th:each="tag : ${tags}"
+						th:value="${tag.tagId}" th:text="${tag.name}"></option>
+			</select>
+		  </div>
+		  <div class="input-field col s4 filter-value" id="user-select" style="display:none;">
+			<select name="user" id="user">
+					<option selected="selected">ALL</option>
+					<option th:each="user : ${users}"
+						th:value="${user.userId}" th:text="${user.nickName}"></option>
+			</select>
+		  </div>
+		  <div class="input-field col s1">
+          	<button id="filter_posts" class="btn waves-effect waves-light" type="button">
+                  <i class="fa fa-filter " aria-hidden="true"  title="Filter"></i>
+              </button>
+          </div>
+        </div>
+        <table>
+        <thead>
+          <tr>
+            <th>Created</th>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Category </th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id='post-list'>
+          <tr th:each="post : ${posts}">
+            <td th:text="${#dates.format(post.created,'yyyy-MM-dd')}"></td>
+            <td th:text="${post.title}"> </td>
+            <td th:text="${post.status}"> </td>
+            <td th:text="${post.category.name}"></td>
+            <td>   </td>
+            <td>
+               <button class="btn waves-effect waves-light" type="button" th:onclick="'fetchPost(' + ${post.postId} + ');'">
+                  <i class="fa fa-pencil " aria-hidden="true"  title="Edit"></i>
+              </button>
+            </td>
+            <td>
+              <button class="btn waves-effect waves-light" type="button">
+                <i class="fa fa-trash " aria-hidden="true"  title="Remove" th:onclick="'deletePost(' + ${post.postId} + ');'"></i>
+              </button>
+            </td>
+          </tr>
+          <tr>
+          	<td colspan="7">
+          		<div th:replace="admin/components/paging :: paging"></div>
+          	</td>
+          </tr>
+      </tbody>
+      </table>
+    </div>
+    </div>
+  </div> 
+    </div>
+    <div id="edit-post-tab" class="col s12">
+    <div class="row">
+     <div class="card col s12 m12 l12">
+      <div class="card-content" id="post-edit-form">
+      <form>
+      <div class="row">
+		<div class="col s12 left-align">
+			<textarea id="content" name="content"></textarea>
+		</div>
+	  </div>
+      </form>
+      </div>
+      </div>
+      </div>
+    </div>
+  </div>
 
 <!-- CONTENT -->
 </div>
@@ -20,15 +140,75 @@
 
 
   <!--  Scripts-->
-  <script src="https://code.jquery.com/jquery-2.1.1.min.js"  th:src="@{/webjars/jquery/jquery.min.js}"></script>
-  <script src="../static/js/materialize.min.js" th:src="@{/js/materialize.min.js}"></script>
+  <div th:replace="admin/components/admin-scripts :: admin-scripts"></div>
+  <script th:src="@{/webjars/simplemde/dist/simplemde.min.js}"></script>
   <script type="text/javascript">
+  /*<![CDATA[*/
   $(document).ready(function(){
       $('.parallax').parallax();
       
       $(".button-collapse").sideNav();
-    });
-       
+      $('select').material_select();
+
+		$('.datepicker').pickadate({
+		    selectMonths: true, // Creates a dropdown to control month
+		    selectYears: 15 // Creates a dropdown of 15 years to control year
+		  });
+      
+      $('#query-selector').change(function(){
+    	  var filter = $(this).val();
+          onlyShow(filter);
+      });
+      
+      $('#filter_posts').click(function(){
+    	  fetchPosts(getQuery(0));
+      });
+  });
+  
+  function deletePost(id) {
+	remove(id,'/admin/posts/','User');
+  }
+  
+  var simplemde = new SimpleMDE({
+	  element: document.getElementById("content"),
+	  forceSync: true,
+	  showIcons: ["strikethrough","code", "table","clean-block","horizontal-rule"],
+	  hideIcons: ["side-by-side", "fullscreen"]
+  });
+  
+  function getQuery(page){
+	  var filter = $('#query-selector').val();
+	  var id =  $('#' + filter).val();
+	  var status = $('#status').val();
+	  var query = '?filter=' + filter.toUpperCase() + '&status=' + status + '&page=' + page + '&size=5';
+	  
+	  if(id !== undefined && id != 'ALL') {
+		  query += '&id=' + id;
+	  }
+	  return query;
+  }
+  
+  function newPost() {
+	  fetchContent('/admin/posts/edit', 'post-edit-form');
+	  $('#edit-tab-button').show();
+	  $('ul.tabs').tabs('select_tab', 'edit-post-tab');
+  }
+  
+  function fetchPost(id) {
+	  fetchContent('/admin/posts/edit?id=' + id, 'post-edit-form');
+	  $('#edit-tab-button').show();
+	  $('ul.tabs').tabs('select_tab', 'edit-post-tab');
+  }
+  
+  function fetchPosts(query) {
+	  fetchContent('/admin/posts/list' + query, 'post-list');
+  }
+  
+  function onlyShow(valueSelect){
+	  $('.filter-value').hide();
+	  $('#' + valueSelect + '-select').show();
+  }
+  /*]]>*/
   </script>
   </body>
 </html>

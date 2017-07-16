@@ -126,6 +126,7 @@
 						</button>
 					</div>
 				</div>
+				<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 			</form>
 		</div>
 		<!-- CONTENT -->
@@ -135,10 +136,7 @@
 
 
 	<!--  Scripts-->
-	<script src="https://code.jquery.com/jquery-2.1.1.min.js"
-		th:src="@{/webjars/jquery/jquery.min.js}"></script>
-	<script src="../static/js/materialize.min.js"
-		th:src="@{/js/materialize.min.js}"></script>
+	<div th:replace="admin/components/admin-scripts :: admin-scripts"></div>
 	<script type="text/javascript">	
 		$(document).ready(function() {
 			$('.parallax').parallax();

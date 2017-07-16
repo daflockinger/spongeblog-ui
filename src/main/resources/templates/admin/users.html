@@ -49,11 +49,7 @@
 
 
 	<!--  Scripts-->
-	<script src="https://code.jquery.com/jquery-2.1.1.min.js"
-		th:src="@{/webjars/jquery/jquery.min.js}"></script>
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-serialize-object/2.5.0/jquery.serialize-object.min.js"></script>
-	<script src="../static/js/materialize.min.js" th:src="@{/js/materialize.min.js}"></script>
-	<script src="../static/js/main.js" th:src="@{/js/main.js}"></script>
+	<div th:replace="admin/components/admin-scripts :: admin-scripts"></div>
 	<script type="text/javascript">
 		$(document).ready(function() {
 			$('.parallax').parallax();
@@ -83,7 +79,8 @@
 				
 			$(".user-delete").on('click', function() {
 				var userId = $(this).attr('name');
-				remove(userId,'/admin/users/','User');
+				var csrfToken = $(this).attr('data-token');
+				remove(userId,'/admin/users/','User',csrfToken);
 			});
 		});
 	</script>

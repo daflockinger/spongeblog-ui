@@ -3,7 +3,9 @@ package com.flockinger.spongeblogui.dto;
 import java.util.Date;
 import java.util.List;
 
-public class PreviewPost {
+import com.flockinger.spongeblogui.controller.helper.Postable;
+
+public class PreviewPost implements Postable {
 	
 	private Long postId;
 	private String link;

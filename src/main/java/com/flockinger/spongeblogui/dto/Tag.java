@@ -1,6 +1,8 @@
 package com.flockinger.spongeblogui.dto;
 
-public class Tag {
+import com.flockinger.spongeblogui.controller.helper.Linkable;
+
+public class Tag implements Linkable {
 	private Long id;
 	private String name;
 	private String link;

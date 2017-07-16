@@ -3,7 +3,9 @@ package com.flockinger.spongeblogui.dto;
 import java.util.Date;
 import java.util.List;
 
-public class Post {
+import com.flockinger.spongeblogui.controller.helper.Postable;
+
+public class Post implements Postable {
 	private String title;
 	private Date created;
 	private Date modified;
@@ -12,7 +14,7 @@ public class Post {
 	
 	private String content;
 	private Category category;
-	
+
 	public UserInfo getUser() {
 		return user;
 	}
