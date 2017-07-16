@@ -28,71 +28,66 @@ import org.springframework.security.web.authentication.preauth.AbstractPreAuthen
 @EnableWebSecurity
 public class BlogSecurityConfig extends WebSecurityConfigurerAdapter {
 
-	   @Value("${google.client.clientId}")
-	    private String clientId;
-	 
-	    @Value("${google.client.clientSecret}")
-	    private String clientSecret;
-	 
-	    @Value("${google.client.accessTokenUri}")
-	    private String accessTokenUri;
-	 
-	    @Value("${google.client.userAuthorizationUri}")
-	    private String userAuthorizationUri;
-	 
-	    @Value("${google.redirectUri}")
-	    private String redirectUri;
-	
-	@Autowired
-	OAuth2ClientContext oauth2ClientContext;
+  @Value("${google.client.clientId}")
+  private String clientId;
 
-    @Autowired
-    AuthenticationManager authenticationManager;
+  @Value("${google.client.clientSecret}")
+  private String clientSecret;
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-    	web
-    	.ignoring().antMatchers(HttpMethod.GET, "/category/**").and()
-    	.ignoring().antMatchers(HttpMethod.GET, "/user/**").and()
-    	.ignoring().antMatchers(HttpMethod.GET, "/tag/**").and()
-    	.ignoring().antMatchers(HttpMethod.GET, "/post/**").and()
-    	.ignoring().antMatchers(HttpMethod.GET, "/");
-    }
-    
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http
-				.addFilterAfter(new OAuth2ClientContextFilter(),AbstractPreAuthenticatedProcessingFilter.class)
-				.addFilterAfter(ssoFilter(), OAuth2ClientContextFilter.class)
-				.httpBasic()
-				.authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login"))
-				.and()
-				.authorizeRequests().antMatchers(HttpMethod.GET, "/login").permitAll()
-				.antMatchers(HttpMethod.GET, "/admin/**").hasAnyAuthority("ADMIN", "AUTHOR")
-				.antMatchers(HttpMethod.POST, "/admin/**").hasAnyAuthority("ADMIN", "AUTHOR")
-				.antMatchers(HttpMethod.PUT, "/admin/**").hasAnyAuthority("ADMIN", "AUTHOR")
-				.antMatchers(HttpMethod.DELETE, "/admin/**").hasAnyAuthority("ADMIN", "AUTHOR")
-				.and().logout().logoutUrl("/admin/logout").logoutSuccessUrl("/").permitAll().and()
-		        .csrf();
-	}
-	
-	private Filter ssoFilter() {
-		OpenIdFilter filter = new OpenIdFilter("/login", authenticationManager);
-		OAuth2RestTemplate template = new OAuth2RestTemplate(google(), oauth2ClientContext);
-		filter.setRestTemplate(template);
-		return filter;
-	}
-	
-    @Bean
-    public OAuth2ProtectedResourceDetails google() {
-        AuthorizationCodeResourceDetails details = new AuthorizationCodeResourceDetails();
-        details.setClientId(clientId);
-        details.setClientSecret(clientSecret);
-        details.setAccessTokenUri(accessTokenUri);
-        details.setUserAuthorizationUri(userAuthorizationUri);
-        details.setScope(Arrays.asList("openid", "email"));
-        details.setPreEstablishedRedirectUri(redirectUri);
-        details.setUseCurrentUri(false);
-        return details;
-    }
+  @Value("${google.client.accessTokenUri}")
+  private String accessTokenUri;
+
+  @Value("${google.client.userAuthorizationUri}")
+  private String userAuthorizationUri;
+
+  @Value("${google.redirectUri}")
+  private String redirectUri;
+
+  @Autowired
+  OAuth2ClientContext oauth2ClientContext;
+
+  @Autowired
+  AuthenticationManager authenticationManager;
+
+  @Override
+  public void configure(WebSecurity web) throws Exception {
+    web.ignoring().antMatchers(HttpMethod.GET, "/category/**").and().ignoring()
+        .antMatchers(HttpMethod.GET, "/user/**").and().ignoring()
+        .antMatchers(HttpMethod.GET, "/tag/**").and().ignoring()
+        .antMatchers(HttpMethod.GET, "/post/**").and().ignoring().antMatchers(HttpMethod.GET, "/");
+  }
+
+  @Override
+  protected void configure(HttpSecurity http) throws Exception {
+    http.addFilterAfter(new OAuth2ClientContextFilter(),
+        AbstractPreAuthenticatedProcessingFilter.class)
+        .addFilterAfter(ssoFilter(), OAuth2ClientContextFilter.class).httpBasic()
+        .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint("/login")).and()
+        .authorizeRequests().antMatchers(HttpMethod.GET, "/login").permitAll()
+        .antMatchers(HttpMethod.GET, "/admin/**").hasAnyAuthority("ADMIN", "AUTHOR")
+        .antMatchers(HttpMethod.POST, "/admin/**").hasAnyAuthority("ADMIN", "AUTHOR")
+        .antMatchers(HttpMethod.PUT, "/admin/**").hasAnyAuthority("ADMIN", "AUTHOR")
+        .antMatchers(HttpMethod.DELETE, "/admin/**").hasAnyAuthority("ADMIN", "AUTHOR").and()
+        .logout().logoutUrl("/admin/logout").logoutSuccessUrl("/").permitAll().and().csrf();
+  }
+
+  private Filter ssoFilter() {
+    OpenIdFilter filter = new OpenIdFilter("/login", authenticationManager);
+    OAuth2RestTemplate template = new OAuth2RestTemplate(google(), oauth2ClientContext);
+    filter.setRestTemplate(template);
+    return filter;
+  }
+
+  @Bean
+  public OAuth2ProtectedResourceDetails google() {
+    AuthorizationCodeResourceDetails details = new AuthorizationCodeResourceDetails();
+    details.setClientId(clientId);
+    details.setClientSecret(clientSecret);
+    details.setAccessTokenUri(accessTokenUri);
+    details.setUserAuthorizationUri(userAuthorizationUri);
+    details.setScope(Arrays.asList("openid", "email"));
+    details.setPreEstablishedRedirectUri(redirectUri);
+    details.setUseCurrentUri(false);
+    return details;
+  }
 }

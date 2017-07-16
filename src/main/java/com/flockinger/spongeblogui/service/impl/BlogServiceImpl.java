@@ -32,108 +32,108 @@ import com.flockinger.spongeblogui.service.BlogService;
 
 @Component
 public class BlogServiceImpl implements BlogService {
-	
-	@Autowired
-	private BlogClient client;
 
-	@Autowired
-	private ModelMapper mapper;
-	
-	private static Logger logger = Logger.getLogger(BlogServiceImpl.class.getName());
-	
-	@Override
-	public Map<String, String> getBlogSettings() {
-		Map<String,String> blog = new HashMap<>();
-		
-		try{
-			blog = AdminServiceImpl.mapBlog(client.getBlog());
-		} catch (EntityIsNotExistingException e) {
-			logger.error("No Blog is existing, please create!",e);
-		}
-		return blog;
-	}
+  @Autowired
+  private BlogClient client;
 
-	@Override
-	public List<Category> getAllCategories() {
-		return client.getCategories().stream()
-				.filter(this::isTopLevelCategory)
-				.map(this::map)
-				.map(this::enrichWithChildren)
-				.collect(Collectors.toList());
-	}
-	
-	private boolean isTopLevelCategory(CategoryDTO category) {
-		return category.getParentId() == null;
-	}
-	
-	private Category map(CategoryDTO category) {
-		return mapper.map(category, Category.class);
-	}
-	
-	private Category enrichWithChildren(Category category) {
-		List<Category> children = client.getCategoriesFromParent(category.getId()).stream().map(this::map).collect(Collectors.toList());
-		category.setChildren(children);
-		return category;
-	}
+  @Autowired
+  private ModelMapper mapper;
 
-	@Override
-	public List<Tag> getAllTags() {
-		return client.getTags().stream()
-				.map(this::map).collect(Collectors.toList());
-	}
-	
-	private Tag map(TagDTO tag) {
-		return mapper.map(tag, Tag.class);
-	}
+  private static Logger logger = Logger.getLogger(BlogServiceImpl.class.getName());
 
-	@Override
-	public PostsPage getAllPosts(Paging page) {
-		return map(client.getPublicPosts(page.getPage(), page.getSize()));
-	}
+  @Override
+  public Map<String, String> getBlogSettings() {
+    Map<String, String> blog = new HashMap<>();
 
-	@Override
-	public PostsPage getPostsForCategory(Long category, Paging page) {
-		return map(client.getPublicPostsByCategory(category, page.getPage(), page.getSize()));
-	}
+    try {
+      blog = AdminServiceImpl.mapBlog(client.getBlog());
+    } catch (EntityIsNotExistingException e) {
+      logger.error("No Blog is existing, please create!", e);
+    }
+    return blog;
+  }
 
-	@Override
-	public PostsPage getPostsForTag(Long tag, Paging page) {
-		return map(client.getPublicPostsByTag(tag, page.getPage(), page.getSize()));
-	}
+  @Override
+  public List<Category> getAllCategories() {
+    return client.getCategories().stream().filter(this::isTopLevelCategory).map(this::map)
+        .map(this::enrichWithChildren).collect(Collectors.toList());
+  }
 
-	@Override
-	public PostsPage getPostsForUser(Long user, Paging page) {
-		return map(client.getPublicPostsByUser(user, page.getPage(), page.getSize()));
-	}
-	
-	private PostsPage map(PostsPageDTO pageDto) {
-		PostsPage page = mapper.map(pageDto, PostsPage.class);
-		List<PreviewPost> previews = emptyIfNull(pageDto.getPreviewPosts()).stream().map(this::map).collect(Collectors.toList());
-		page.setPreviewPosts(previews);
-		return page;
-	}
-	
-	private PreviewPost map(PostPreviewDTO previewPost) {
-		PreviewPost post = mapper.map(previewPost, PreviewPost.class);
-		post.setUser(map(previewPost.getAuthor()));
-		post.setTags(emptyIfNull(previewPost.getTags()).stream().map(this::map).collect(Collectors.toList()));
-		return post;
-	}
+  private boolean isTopLevelCategory(CategoryDTO category) {
+    return category.getParentId() == null;
+  }
 
-	@Override
-	public Post getPost(Long id) {
-		return map(client.getPost(id));
-	}
-	
-	private Post map(PostDTO postDto){
-		Post post = mapper.map(postDto, Post.class);
-		post.setUser(map(postDto.getAuthor()));
-		post.setCategory(map(postDto.getCategory()));
-		post.setTags(emptyIfNull(postDto.getTags()).stream().map(this::map).collect(Collectors.toList()));
-		return post;
-	}
-	
-	private UserInfo map(UserInfoDTO user) {
-		return mapper.map(user, UserInfo.class);
-	}
+  private Category map(CategoryDTO category) {
+    return mapper.map(category, Category.class);
+  }
+
+  private Category enrichWithChildren(Category category) {
+    List<Category> children = client.getCategoriesFromParent(category.getId()).stream()
+        .map(this::map).collect(Collectors.toList());
+    category.setChildren(children);
+    return category;
+  }
+
+  @Override
+  public List<Tag> getAllTags() {
+    return client.getTags().stream().map(this::map).collect(Collectors.toList());
+  }
+
+  private Tag map(TagDTO tag) {
+    return mapper.map(tag, Tag.class);
+  }
+
+  @Override
+  public PostsPage getAllPosts(Paging page) {
+    return map(client.getPublicPosts(page.getPage(), page.getSize()));
+  }
+
+  @Override
+  public PostsPage getPostsForCategory(Long category, Paging page) {
+    return map(client.getPublicPostsByCategory(category, page.getPage(), page.getSize()));
+  }
+
+  @Override
+  public PostsPage getPostsForTag(Long tag, Paging page) {
+    return map(client.getPublicPostsByTag(tag, page.getPage(), page.getSize()));
+  }
+
+  @Override
+  public PostsPage getPostsForUser(Long user, Paging page) {
+    return map(client.getPublicPostsByUser(user, page.getPage(), page.getSize()));
+  }
+
+  private PostsPage map(PostsPageDTO pageDto) {
+    PostsPage page = mapper.map(pageDto, PostsPage.class);
+    List<PreviewPost> previews =
+        emptyIfNull(pageDto.getPreviewPosts()).stream().map(this::map).collect(Collectors.toList());
+    page.setPreviewPosts(previews);
+    return page;
+  }
+
+  private PreviewPost map(PostPreviewDTO previewPost) {
+    PreviewPost post = mapper.map(previewPost, PreviewPost.class);
+    post.setUser(map(previewPost.getAuthor()));
+    post.setTags(
+        emptyIfNull(previewPost.getTags()).stream().map(this::map).collect(Collectors.toList()));
+    return post;
+  }
+
+  @Override
+  public Post getPost(Long id) {
+    return map(client.getPost(id));
+  }
+
+  private Post map(PostDTO postDto) {
+    Post post = mapper.map(postDto, Post.class);
+    post.setUser(map(postDto.getAuthor()));
+    post.setCategory(map(postDto.getCategory()));
+    post.setTags(
+        emptyIfNull(postDto.getTags()).stream().map(this::map).collect(Collectors.toList()));
+    return post;
+  }
+
+  private UserInfo map(UserInfoDTO user) {
+    return mapper.map(user, UserInfo.class);
+  }
 }

@@ -3,13 +3,13 @@ package com.flockinger.spongeblogui.dto;
 import com.flockinger.spongeblogui.resource.dto.PostStatus;
 
 public interface PostQueryBuilder {
-	PostQuery build();
+  PostQuery build();
 
-	PostQueryBuilder status(PostStatus status);
+  PostQueryBuilder status(PostStatus status);
 
-	PostQueryBuilder size(Integer size);
+  PostQueryBuilder size(Integer size);
 
-	PostQueryBuilder page(Integer page);
+  PostQueryBuilder page(Integer page);
 
-	PostQueryBuilder path(String path);
+  PostQueryBuilder path(String path);
 }

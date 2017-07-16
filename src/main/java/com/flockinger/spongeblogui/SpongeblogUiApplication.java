@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class SpongeblogUiApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(SpongeblogUiApplication.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(SpongeblogUiApplication.class, args);
+  }
 }

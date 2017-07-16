@@ -9,61 +9,62 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
 public class BlogAuthentication implements Authentication {
 
-	/**
-	* 
-	*/
-	private static final long serialVersionUID = 3399132926949107510L;
+  /**
+  * 
+  */
+  private static final long serialVersionUID = 3399132926949107510L;
 
-	private boolean isAuthenticated = false;
-	private Object principal;
-	private Object details;
-	private Object credentials;
-	private String name;
-	private Collection<? extends GrantedAuthority> authorities = Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));;
+  private boolean isAuthenticated = false;
+  private Object principal;
+  private Object details;
+  private Object credentials;
+  private String name;
+  private Collection<? extends GrantedAuthority> authorities =
+      Arrays.asList(new SimpleGrantedAuthority("ROLE_USER"));;
 
-	public BlogAuthentication(Authentication authentication) {
-		this.principal = authentication.getPrincipal();
-		this.details = authentication.getDetails();
-		this.credentials = authentication.getCredentials();
-		this.name = authentication.getName();
-	}
+  public BlogAuthentication(Authentication authentication) {
+    this.principal = authentication.getPrincipal();
+    this.details = authentication.getDetails();
+    this.credentials = authentication.getCredentials();
+    this.name = authentication.getName();
+  }
 
-	public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
-		this.authorities = authorities;
-	}
-	
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return authorities;
-	}
+  public void setAuthorities(Collection<? extends GrantedAuthority> authorities) {
+    this.authorities = authorities;
+  }
 
-	@Override
-	public String getName() {
-		return name;
-	}
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    return authorities;
+  }
 
-	@Override
-	public Object getCredentials() {
-		return credentials;
-	}
+  @Override
+  public String getName() {
+    return name;
+  }
 
-	@Override
-	public Object getDetails() {
-		return details;
-	}
+  @Override
+  public Object getCredentials() {
+    return credentials;
+  }
 
-	@Override
-	public Object getPrincipal() {
-		return principal;
-	}
+  @Override
+  public Object getDetails() {
+    return details;
+  }
 
-	@Override
-	public boolean isAuthenticated() {
-		return isAuthenticated;
-	}
+  @Override
+  public Object getPrincipal() {
+    return principal;
+  }
 
-	@Override
-	public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
-		this.isAuthenticated = isAuthenticated;
-	}
+  @Override
+  public boolean isAuthenticated() {
+    return isAuthenticated;
+  }
+
+  @Override
+  public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
+    this.isAuthenticated = isAuthenticated;
+  }
 }

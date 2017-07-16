@@ -10,12 +10,13 @@ import com.flockinger.spongeblogui.resource.ClientErrorHandler;
 import feign.codec.ErrorDecoder;
 
 @Configuration
-@EnableFeignClients(basePackages="com.flockinger.spongeblogui.resource",defaultConfiguration=ClientConfig.class)
+@EnableFeignClients(basePackages = "com.flockinger.spongeblogui.resource",
+    defaultConfiguration = ClientConfig.class)
 public class ClientConfig {
 
-	@Bean
-	@Primary
-	public ErrorDecoder feignErrorDecoder(){
-		return new ClientErrorHandler();
-	}
+  @Bean
+  @Primary
+  public ErrorDecoder feignErrorDecoder() {
+    return new ClientErrorHandler();
+  }
 }

@@ -25,35 +25,36 @@ import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 
 public class OpenIdFilter extends AbstractAuthenticationProcessingFilter {
-	public OAuth2RestOperations restTemplate;
+  public OAuth2RestOperations restTemplate;
 
-	public OpenIdFilter(String defaultFilterProcessesUrl, AuthenticationManager authenticationManager) {
-		super(defaultFilterProcessesUrl);
-		setAuthenticationManager(authenticationManager);
-	}
+  public OpenIdFilter(String defaultFilterProcessesUrl,
+      AuthenticationManager authenticationManager) {
+    super(defaultFilterProcessesUrl);
+    setAuthenticationManager(authenticationManager);
+  }
 
-	@Override
-	public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
-			throws AuthenticationException, IOException, ServletException {
+  @Override
+  public Authentication attemptAuthentication(HttpServletRequest request,
+      HttpServletResponse response) throws AuthenticationException, IOException, ServletException {
 
-		OAuth2AccessToken accessToken;
-		try {
-			accessToken = restTemplate.getAccessToken();
-		} catch (final OAuth2Exception e) {
-			throw new BadCredentialsException("Could not obtain access token", e);
-		}
-		try {
-			final String idToken = accessToken.getAdditionalInformation().get("id_token").toString();
-			final Jwt tokenDecoded = JwtHelper.decode(idToken);
-			DocumentContext tokenContext = JsonPath.parse(tokenDecoded.getClaims());
-			return getAuthenticationManager().authenticate(
-					new UsernamePasswordAuthenticationToken(tokenContext.read("$.email"), null, new ArrayList<>()));
-		} catch (final InvalidTokenException e) {
-			throw new BadCredentialsException("Could not obtain user details from token", e);
-		}
-	}
+    OAuth2AccessToken accessToken;
+    try {
+      accessToken = restTemplate.getAccessToken();
+    } catch (final OAuth2Exception e) {
+      throw new BadCredentialsException("Could not obtain access token", e);
+    }
+    try {
+      final String idToken = accessToken.getAdditionalInformation().get("id_token").toString();
+      final Jwt tokenDecoded = JwtHelper.decode(idToken);
+      DocumentContext tokenContext = JsonPath.parse(tokenDecoded.getClaims());
+      return getAuthenticationManager().authenticate(new UsernamePasswordAuthenticationToken(
+          tokenContext.read("$.email"), null, new ArrayList<>()));
+    } catch (final InvalidTokenException e) {
+      throw new BadCredentialsException("Could not obtain user details from token", e);
+    }
+  }
 
-	public void setRestTemplate(OAuth2RestTemplate restTemplate2) {
-		restTemplate = restTemplate2;
-	}
+  public void setRestTemplate(OAuth2RestTemplate restTemplate2) {
+    restTemplate = restTemplate2;
+  }
 }

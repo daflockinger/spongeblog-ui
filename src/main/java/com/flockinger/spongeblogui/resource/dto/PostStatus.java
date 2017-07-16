@@ -4,24 +4,24 @@ package com.flockinger.spongeblogui.resource.dto;
  * Display status of the Post.
  */
 public enum PostStatus {
-	ALL("ALL"),
-	
-	PUBLIC("PUBLIC"),
+  ALL("ALL"),
 
-	PRIVATE("PRIVATE"),
+  PUBLIC("PUBLIC"),
 
-	MAINTENANCE("MAINTENANCE"),
+  PRIVATE("PRIVATE"),
 
-	DELETED("DELETED");
+  MAINTENANCE("MAINTENANCE"),
 
-	private String value;
+  DELETED("DELETED");
 
-	PostStatus(String value) {
-		this.value = value;
-	}
+  private String value;
 
-	@Override
-	public String toString() {
-		return String.valueOf(value);
-	}
+  PostStatus(String value) {
+    this.value = value;
+  }
+
+  @Override
+  public String toString() {
+    return String.valueOf(value);
+  }
 }

@@ -5,21 +5,21 @@ package com.flockinger.spongeblogui.resource.dto;
  * Status of the Blog.
  */
 public enum BlogStatus {
-	
-	ACTIVE("ACTIVE"),
 
-	DISABLED("DISABLED"),
+  ACTIVE("ACTIVE"),
 
-	MAINTENANCE("MAINTENANCE");
+  DISABLED("DISABLED"),
 
-	private String value;
+  MAINTENANCE("MAINTENANCE");
 
-	BlogStatus(String value) {
-		this.value = value;
-	}
+  private String value;
 
-	@Override
-	public String toString() {
-		return String.valueOf(value);
-	}
+  BlogStatus(String value) {
+    this.value = value;
+  }
+
+  @Override
+  public String toString() {
+    return String.valueOf(value);
+  }
 }

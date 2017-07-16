@@ -10,16 +10,19 @@ import com.flockinger.spongeblogui.dto.PostsPage;
 import com.flockinger.spongeblogui.dto.Tag;
 
 public interface BlogService {
-	Map<String,String> getBlogSettings();
-	
-	List<Category> getAllCategories();
-	
-	List<Tag> getAllTags();
-	
-	PostsPage getAllPosts(Paging page);
-	PostsPage getPostsForCategory(Long category, Paging page);
-	PostsPage getPostsForTag(Long tag, Paging page);
-	PostsPage getPostsForUser(Long user, Paging page);
-	
-	Post getPost(Long id);
+  Map<String, String> getBlogSettings();
+
+  List<Category> getAllCategories();
+
+  List<Tag> getAllTags();
+
+  PostsPage getAllPosts(Paging page);
+
+  PostsPage getPostsForCategory(Long category, Paging page);
+
+  PostsPage getPostsForTag(Long tag, Paging page);
+
+  PostsPage getPostsForUser(Long user, Paging page);
+
+  Post getPost(Long id);
 }

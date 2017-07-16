@@ -10,11 +10,12 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.hateoas.ResourceSupport;
+
 /**
  * PostDTO
  */
-public class PostDTO  extends ResourceSupport {
- 
+public class PostDTO extends ResourceSupport {
+
   private Long postId = null;
 
   @NotEmpty
@@ -43,10 +44,11 @@ public class PostDTO  extends ResourceSupport {
   private List<TagDTO> tags = new ArrayList<TagDTO>();
 
 
-   /**
+  /**
    * Unique identifier.
+   * 
    * @return postId
-  **/
+   **/
   public Long getPostId() {
     return postId;
   }
@@ -55,10 +57,11 @@ public class PostDTO  extends ResourceSupport {
     this.postId = postId;
   }
 
-   /**
+  /**
    * The title of the Blog post.
+   * 
    * @return title
-  **/
+   **/
   public String getTitle() {
     return title;
   }
@@ -67,10 +70,11 @@ public class PostDTO  extends ResourceSupport {
     this.title = title;
   }
 
-   /**
+  /**
    * Post text/html content.
+   * 
    * @return content
-  **/
+   **/
   public String getContent() {
     return content;
   }
@@ -79,10 +83,11 @@ public class PostDTO  extends ResourceSupport {
     this.content = content;
   }
 
-   /**
+  /**
    * Creation date of Post in long.
+   * 
    * @return created
-  **/
+   **/
   public Date getCreated() {
     return created;
   }
@@ -91,10 +96,11 @@ public class PostDTO  extends ResourceSupport {
     this.created = created;
   }
 
-   /**
+  /**
    * Modification date of Post in long.
+   * 
    * @return modified
-  **/
+   **/
   public Date getModified() {
     return modified;
   }
@@ -103,10 +109,11 @@ public class PostDTO  extends ResourceSupport {
     this.modified = modified;
   }
 
-   /**
+  /**
    * Display status of the Post.
+   * 
    * @return status
-  **/
+   **/
   public PostStatus getStatus() {
     return status;
   }
@@ -115,10 +122,11 @@ public class PostDTO  extends ResourceSupport {
     this.status = status;
   }
 
-   /**
+  /**
    * Get author
+   * 
    * @return author
-  **/
+   **/
   public UserInfoDTO getAuthor() {
     return author;
   }
@@ -127,10 +135,11 @@ public class PostDTO  extends ResourceSupport {
     this.author = author;
   }
 
-   /**
+  /**
    * Get category
+   * 
    * @return category
-  **/
+   **/
   public CategoryDTO getCategory() {
     return category;
   }
@@ -139,10 +148,11 @@ public class PostDTO  extends ResourceSupport {
     this.category = category;
   }
 
-   /**
+  /**
    * Tags of Post.
+   * 
    * @return tags
-  **/
+   **/
   public List<TagDTO> getTags() {
     return tags;
   }

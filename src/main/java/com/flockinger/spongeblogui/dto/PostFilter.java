@@ -1,8 +1,5 @@
 package com.flockinger.spongeblogui.dto;
 
 public enum PostFilter {
-	TAG,
-	CATEGORY,
-	USER,
-	ALL;
+  TAG, CATEGORY, USER, ALL;
 }

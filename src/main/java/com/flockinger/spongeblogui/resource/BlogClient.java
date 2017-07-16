@@ -19,41 +19,50 @@ import com.flockinger.spongeblogui.resource.dto.PostDTO;
 import com.flockinger.spongeblogui.resource.dto.PostsPageDTO;
 import com.flockinger.spongeblogui.resource.dto.TagDTO;
 
-@FeignClient(value="blog",url="${spongeblog.client.url}")
+@FeignClient(value = "blog", url = "${spongeblog.client.url}")
 public interface BlogClient {
 
-	@RequestMapping(method = RequestMethod.GET, value = "blog")
-	BlogDTO getBlog();
+  @RequestMapping(method = RequestMethod.GET, value = "blog")
+  BlogDTO getBlog();
 
-	@RequestMapping(method = RequestMethod.GET, value = "categories/children/{parentCategoryId}")
-	List<CategoryDTO> getCategoriesFromParent(@PathVariable("parentCategoryId") Long parentCategoryId);
+  @RequestMapping(method = RequestMethod.GET, value = "categories/children/{parentCategoryId}")
+  List<CategoryDTO> getCategoriesFromParent(
+      @PathVariable("parentCategoryId") Long parentCategoryId);
 
-	@RequestMapping(method = RequestMethod.GET, value = "categories")
-	List<CategoryDTO> getCategories();
+  @RequestMapping(method = RequestMethod.GET, value = "categories")
+  List<CategoryDTO> getCategories();
 
-	@RequestMapping(method = RequestMethod.GET, value = "tags")
-	List<TagDTO> getTags();
+  @RequestMapping(method = RequestMethod.GET, value = "tags")
+  List<TagDTO> getTags();
 
-	@RequestMapping(method = RequestMethod.GET, value = "posts/{postId}")
-	PostDTO getPost(@PathVariable("postId") Long postId);
+  @RequestMapping(method = RequestMethod.GET, value = "posts/{postId}")
+  PostDTO getPost(@PathVariable("postId") Long postId);
 
-	@RequestMapping(method = RequestMethod.GET, value = "posts/status/PUBLIC")
-	PostsPageDTO getPublicPosts(
-			@RequestParam(required = false, defaultValue = PAGING_DEFAULT_PAGE_KEY, value = PAGE_PARAM_NAME) Integer page,
-			@RequestParam(required = false, defaultValue = PAGING_DEFAULT_ITEMS_PER_PAGE_KEY, value = SIZE_PARAM_NAME) Integer size);
+  @RequestMapping(method = RequestMethod.GET, value = "posts/status/PUBLIC")
+  PostsPageDTO getPublicPosts(
+      @RequestParam(required = false, defaultValue = PAGING_DEFAULT_PAGE_KEY,
+          value = PAGE_PARAM_NAME) Integer page,
+      @RequestParam(required = false, defaultValue = PAGING_DEFAULT_ITEMS_PER_PAGE_KEY,
+          value = SIZE_PARAM_NAME) Integer size);
 
-	@RequestMapping(method = RequestMethod.GET, value = "posts/author/{userId}/PUBLIC")
-	PostsPageDTO getPublicPostsByUser(@PathVariable("userId") Long userId,
-			@RequestParam(required = false, defaultValue = PAGING_DEFAULT_PAGE_KEY, value = PAGE_PARAM_NAME) Integer page,
-			@RequestParam(required = false, defaultValue = PAGING_DEFAULT_ITEMS_PER_PAGE_KEY, value = SIZE_PARAM_NAME) Integer size);
+  @RequestMapping(method = RequestMethod.GET, value = "posts/author/{userId}/PUBLIC")
+  PostsPageDTO getPublicPostsByUser(@PathVariable("userId") Long userId,
+      @RequestParam(required = false, defaultValue = PAGING_DEFAULT_PAGE_KEY,
+          value = PAGE_PARAM_NAME) Integer page,
+      @RequestParam(required = false, defaultValue = PAGING_DEFAULT_ITEMS_PER_PAGE_KEY,
+          value = SIZE_PARAM_NAME) Integer size);
 
-	@RequestMapping(method = RequestMethod.GET, value = "posts/category/{categoryId}/PUBLIC")
-	PostsPageDTO getPublicPostsByCategory(@PathVariable("categoryId") Long categoryId,
-			@RequestParam(required = false, defaultValue = PAGING_DEFAULT_PAGE_KEY, value = PAGE_PARAM_NAME) Integer page,
-			@RequestParam(required = false, defaultValue = PAGING_DEFAULT_ITEMS_PER_PAGE_KEY, value = SIZE_PARAM_NAME) Integer size);
+  @RequestMapping(method = RequestMethod.GET, value = "posts/category/{categoryId}/PUBLIC")
+  PostsPageDTO getPublicPostsByCategory(@PathVariable("categoryId") Long categoryId,
+      @RequestParam(required = false, defaultValue = PAGING_DEFAULT_PAGE_KEY,
+          value = PAGE_PARAM_NAME) Integer page,
+      @RequestParam(required = false, defaultValue = PAGING_DEFAULT_ITEMS_PER_PAGE_KEY,
+          value = SIZE_PARAM_NAME) Integer size);
 
-	@RequestMapping(method = RequestMethod.GET, value = "posts/tag/{tagId}/PUBLIC")
-	PostsPageDTO getPublicPostsByTag(@PathVariable("tagId") Long tagId,
-			@RequestParam(required = false, defaultValue = PAGING_DEFAULT_PAGE_KEY, value = PAGE_PARAM_NAME) Integer page,
-			@RequestParam(required = false, defaultValue = PAGING_DEFAULT_ITEMS_PER_PAGE_KEY, value = SIZE_PARAM_NAME) Integer size);
+  @RequestMapping(method = RequestMethod.GET, value = "posts/tag/{tagId}/PUBLIC")
+  PostsPageDTO getPublicPostsByTag(@PathVariable("tagId") Long tagId,
+      @RequestParam(required = false, defaultValue = PAGING_DEFAULT_PAGE_KEY,
+          value = PAGE_PARAM_NAME) Integer page,
+      @RequestParam(required = false, defaultValue = PAGING_DEFAULT_ITEMS_PER_PAGE_KEY,
+          value = SIZE_PARAM_NAME) Integer size);
 }

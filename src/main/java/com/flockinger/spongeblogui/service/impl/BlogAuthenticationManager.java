@@ -16,21 +16,21 @@ import com.flockinger.spongeblogui.security.BlogAuthentication;
 @Service
 public class BlogAuthenticationManager implements AuthenticationManager {
 
-	@Autowired
-	private AdminClient client;
-	
+  @Autowired
+  private AdminClient client;
 
-	@Override
-	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-		BlogAuthentication wrapper = new BlogAuthentication(authentication);
-		String userLogin = StringUtils.toString(authentication.getPrincipal());
-		
-		try {
-			BlogUserDetails details = client.getUserByEmail(userLogin);
-			wrapper.setAuthorities(details.getAuthorities());
-		} catch (EntityIsNotExistingException e) { 
-			throw new OAuth2Exception("User tried to login with: " + userLogin, e);
-		}
-		return wrapper;
-	}
+
+  @Override
+  public Authentication authenticate(Authentication authentication) throws AuthenticationException {
+    BlogAuthentication wrapper = new BlogAuthentication(authentication);
+    String userLogin = StringUtils.toString(authentication.getPrincipal());
+
+    try {
+      BlogUserDetails details = client.getUserByEmail(userLogin);
+      wrapper.setAuthorities(details.getAuthorities());
+    } catch (EntityIsNotExistingException e) {
+      throw new OAuth2Exception("User tried to login with: " + userLogin, e);
+    }
+    return wrapper;
+  }
 }
