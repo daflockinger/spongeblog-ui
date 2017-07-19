@@ -52,6 +52,10 @@ public class BlogSecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   public void configure(WebSecurity web) throws Exception {
     web.ignoring().antMatchers(HttpMethod.GET, "/category/**").and().ignoring()
+        .antMatchers(HttpMethod.GET, "/js/**").and().ignoring()
+        .antMatchers(HttpMethod.GET, "/css/**").and().ignoring()
+        .antMatchers(HttpMethod.GET, "/images/**").and().ignoring()
+        .antMatchers(HttpMethod.GET, "/webjars/**").and().ignoring()
         .antMatchers(HttpMethod.GET, "/user/**").and().ignoring()
         .antMatchers(HttpMethod.GET, "/tag/**").and().ignoring()
         .antMatchers(HttpMethod.GET, "/post/**").and().ignoring().antMatchers(HttpMethod.GET, "/");
