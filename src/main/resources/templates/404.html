@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:fragment="head">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no"/>
+  <title>Spongeblog</title>
+
+  <!-- CSS  -->
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+  <link href="../static/css/materialize.css" th:href="@{/css/materialize.css}" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" th:href="@{/webjars/font-awesome/css/font-awesome.min.css}"/>
+  <link rel="stylesheet" href="../static/css/main.css" th:href="@{/css/main.css}"/>
+</head>
+<body>
+
+
+
+<!-- CONTENT-HEADER -->
+<div class="parallax-container">
+      <div class="parallax"><img src="../static/images/background.JPG" th:src="@{/images/background.JPG}"/></div>
+       <div class="row blog-header">
+        <div class="col s12 m12 l12 center-align">
+        <h1 class="header center white-text"><i class="fa fa-exclamation-triangle" aria-hidden="true"></i><span th:text="${message}"></span><i class="fa fa-exclamation-triangle" aria-hidden="true"></i></h1>
+        </div>
+      </div>
+</div>
+<!-- CONTENT-HEADER -->
+
+<main>
+<div class="container center">
+
+
+
+</div>
+</main>
+
+<footer class="page-footer grey" th:template="footer">
+          <div class="footer-copyright grey darken-1">
+            <div class="container">
+              <div class="row">
+                  <div class=" col s12 m12 l12">© 2017 daflockinger. All rights reserved.
+                </div>
+              </div>
+            </div>
+          </div>
+</footer>
+
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"  th:src="@{/webjars/jquery/jquery.min.js}"></script>
+  <script src="../static/js/materialize.min.js" th:src="@{/js/materialize.min.js}"></script>
+  <script type="text/javascript">
+  $(document).ready(function(){
+      $('.parallax').parallax();
+      $('.dropdown-button').dropdown({
+          inDuration: 300,
+          outDuration: 225,
+          hover: true, // Activate on hover
+          belowOrigin: true, // Displays dropdown below the button
+         // alignment: 'right' // Displays dropdown with edge aligned to the left of button
+        }
+      );
+      $('.collapsible').collapsible();
+      $(".button-collapse").sideNav();
+    });
+       
+  </script>
+  </body>
+</html>

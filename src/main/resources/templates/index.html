@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="components/head :: head"></head>
+<body>
+
+<header th:replace="components/navbar :: navbar"></header>
+
+
+<!-- CONTENT-HEADER -->
+<div class="parallax-container">
+      <div class="parallax"><img src="../static/images/background.JPG" th:src="@{/images/background.JPG}"/></div>
+       <div class="row blog-header">
+        <div class="col s12 m12 l12 center-align">
+        <h1 class="header center white-text" th:text="${blog['title']}"></h1>
+          <h5 class="header col s12 white-text" th:text="${blog['subtitle']}"></h5>
+        </div>
+      </div>
+</div>
+<!-- CONTENT-HEADER -->
+
+<main>
+<div class="container center">
+<!-- CONTENT -->   
+    
+<div class="row left-align" th:each="post : ${previews}">
+  <div class="col s12 m12 l12">
+    <div class="card">
+            <div class="card-content">
+              <span class="card-title"><a href="#" th:href="@{/post/{pathVariable}(pathVariable=${post.link})}"><h4 th:text="${post.title}"></h4></a></span>
+              <p>
+              	<a href="#" th:href="@{/user/{pathVariable}(pathVariable=${post.user.link})}"><span th:text="${post.user.name}"/></a>  / <span th:text="${#dates.format(post.created, 'dd-MM-yyyy hh:mm')}"/>
+              		<span th:each="tag : ${post.tags}">
+              			<div class="chip"><a href="#" th:href="@{/tag/{pathVariable}(pathVariable=${tag.link})}" th:text="${tag.name}"></a></div>
+              		</span> 
+              </p>
+            </div>
+            <div class="card-content">
+                <p th:utext="${post.partContent}"></p> 
+            </div>
+            <div class="card-action">
+              <a href="#" th:href="@{/post/{pathVariable}(pathVariable=${post.link})}">Read more...</a>
+            </div>
+    </div>
+  </div>
+</div>
+<!-- CONTENT -->
+
+
+<div th:replace="components/paging :: paging"></div>
+</div>
+</main>
+
+<footer th:replace="components/footer :: footer"></footer>
+
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"  th:src="@{/webjars/jquery/jquery.min.js}"></script>
+  <script src="../static/js/materialize.min.js" th:src="@{/js/materialize.min.js}"></script>
+  <script type="text/javascript">
+  $(document).ready(function(){
+      $('.parallax').parallax();
+      $('.dropdown-button').dropdown({
+          inDuration: 300,
+          outDuration: 225,
+          hover: true, // Activate on hover
+          belowOrigin: true, // Displays dropdown below the button
+         // alignment: 'right' // Displays dropdown with edge aligned to the left of button
+        }
+      );
+      $('.collapsible').collapsible();
+      $(".button-collapse").sideNav();
+    });
+       
+  </script>
+  </body>
+</html>

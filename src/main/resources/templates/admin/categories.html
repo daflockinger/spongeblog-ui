@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="admin/components/head :: head"></head>
+<body>
+<header th:replace="admin/components/navbar :: navbar"></header>
+
+
+
+<main>
+<div class="container center">
+<!-- CONTENT -->   
+    
+<div class="container center-align">
+  <div class="row">
+    <div class="col s12">
+      <h2>Categories</h2>
+    </div>
+  </div>
+    <div class="row">
+      <div class="card col s12 m12 l12">
+        
+        <table>
+        <thead>
+          <tr>
+            <th data-field="name">Name</th>
+            <th data-field="name">Parent</th>
+            <th data-field="name">Rank</th>
+            <td></td>
+            <td></td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="category : ${categories}">
+           <form action="#" th:id="'form-category-' + ${category.categoryId}">
+            <td>
+              <div class="input-field col s12">
+				<input type="text" th:value="${category.name}" class="validate" required="" aria-required="true" name="name"/> 
+			</div>
+			</td>
+			 <td>
+			 <div class="input-field col s12">
+			 	<select name="parentId" th:form="'form-category-' + ${category.categoryId}">
+					<option value="null" th:selected="${category.parentId == null}">No Parent</option>
+					<option th:each="topCategory : ${topCategories}"
+						th:value="${topCategory.categoryId}" th:text="${topCategory.name}" 
+						th:selected="${topCategory.categoryId} == ${category.parentId}"></option>
+				</select>
+			</div>
+			</td>
+			<td>
+              <div class="input-field col s12">
+				<input type="number" th:value="${category.rank}" class="validate" required="" aria-required="true" th:id="'category-' + ${category.categoryId}" name="rank"/>
+				<input th:if="${category.categoryId}" type="hidden" name="categoryId" th:value="${category.categoryId}"/>
+			</div>
+            </td>
+            <td th:unless="${category.categoryId}">
+              <button class="btn waves-effect waves-light category-save" type="submit" th:name="'form-category-' + ${category.categoryId}">
+                <i class="fa fa-plus" aria-hidden="true" title="Add"></i>
+              </button>
+            </td>
+            <td th:if="${category.categoryId}">
+              <button class="btn waves-effect waves-light category-save" type="submit" th:name="'form-category-' + ${category.categoryId}">
+                <i class="fa fa-save " aria-hidden="true"  title="Save"></i>
+              </button>
+            </td>
+            <td th:if="${category.categoryId}">
+              <button class="btn waves-effect waves-light category-delete" type="button"  th:name="${category.categoryId}" th:attr="data-token=${_csrf.token}">
+                <i class="fa fa-trash " aria-hidden="true"  title="Remove"></i>
+              </button>
+            </td>
+            <td></td>
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+             </form>
+          </tr>
+      </tbody>
+      </table>
+     
+    </div>
+  </div>
+</div>    
+    
+
+<!-- CONTENT -->
+</div>
+</main>
+
+
+
+  <!--  Scripts-->
+  <div th:replace="admin/components/admin-scripts :: admin-scripts"></div>
+  <script type="text/javascript">
+  $(document).ready(function(){
+      $('.parallax').parallax();
+      
+      $(".button-collapse").sideNav();
+      $('select').material_select();
+      
+      $('form').on('submit', function (e) {
+			e.preventDefault();  
+	  });
+    
+      $(".category-save").on('click', function(event) {				
+			var formName = $(this).attr('name');
+			var formData = $('#' + formName).serializeObject();
+			if(formData.parentId == 'null') {
+				formData.parentId = null;
+			}
+			save(formData,'/admin/categories','Category');
+		});
+			
+		$(".category-delete").on('click', function() {
+			var userId = $(this).attr('name');
+			var csrfToken = $(this).attr('data-token');
+			remove(userId,'/admin/categories/','Category',csrfToken);
+		});
+      
+    });
+       
+  </script>
+  </body>
+</html>

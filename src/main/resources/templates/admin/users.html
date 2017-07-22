@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="admin/components/head :: head"></head>
+<body>
+	<header th:replace="admin/components/navbar :: navbar"></header>
+
+
+
+	<main>
+	<div class="container center">
+		<!-- CONTENT -->
+
+		<div class="container center-align">
+			<div class="row">
+				<div class="col s12">
+					<h2>User Settings</h2>
+				</div>
+			</div>
+			<div class="row">
+				<div class="card col s12 m8 offset-m2 l8 offset-l2">
+					<div class="card-content">
+						<span class="card-title">Users</span>
+						
+						<ul class="collapsible" data-collapsible="accordion">
+							<li th:each="user : ${users}">
+								<div class="collapsible-header">
+									<i class="material-icons" th:if="${user.nickName}">mode_edit</i>
+									<i class="material-icons" th:unless="${user.nickName}">add</i>
+									<span th:if="${user.nickName}" th:text="${user.nickName}"></span>
+									<span th:unless="${user.nickName}">New User</span>
+								</div>
+								<div class="collapsible-body">
+									<span>
+										<div th:replace="admin/components/userForm :: user-form"></div>
+									</span>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- CONTENT -->
+	</div>
+	</main>
+
+
+
+	<!--  Scripts-->
+	<div th:replace="admin/components/admin-scripts :: admin-scripts"></div>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('.parallax').parallax();
+
+			$(".button-collapse").sideNav();
+			
+			$('.datepicker').pickadate({
+			    selectMonths: true, // Creates a dropdown to control month
+			    selectYears: 15 // Creates a dropdown of 15 years to control year
+			  });
+			
+			
+			$('form').on('submit', function (e) {
+				e.preventDefault();  
+			});
+			
+			$(".user-save").on('click', function(event) {				
+				var formName = $(this).attr('name');
+				var formData = $('#' + formName).serializeObject();
+				if(formData.password == '') {
+					delete formData['password'];
+				}
+				formData.registered = new Date(formData.registered);
+
+				save(formData,'/admin/users','User');
+			});
+				
+			$(".user-delete").on('click', function() {
+				var userId = $(this).attr('name');
+				var csrfToken = $(this).attr('data-token');
+				remove(userId,'/admin/users/','User',csrfToken);
+			});
+		});
+	</script>
+</body>
+</html>

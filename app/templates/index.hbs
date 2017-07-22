@@ -1,9 +1,0 @@
-{{index-navigation categories=model.categories}}
-{{index-header title=model.blog.firstObject.name subtitle="embrace yourself"}}
-<div class="container center-align" style="min-height:1000px;">
-  {{#each model.posts as |post|}}
-    {{category-post post=post}}
-  {{/each}}
-  {{index-pagination hasPreviousPage=model.posts.firstObject.hasPreviousPage page=model.page}}
-</div>
-{{index-footer settings=model.blog.firstObject.settings categories=model.categories}}

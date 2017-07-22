@@ -1,0 +1,38 @@
+spring:
+  thymeleaf:
+    cache: false
+  jackson:
+    date-format: com.fasterxml.jackson.databind.util.ISO8601DateFormat
+
+spongeblog:
+  client:
+    url: http://localhost:8081/api/v1/
+
+#security:
+#  basic:
+#    enabled: false
+management:
+  security:
+    enabled: false
+    
+blog:
+  paging:
+    default-page: 0
+    default-items-per-page: 5
+
+## simple service-to-service security
+security-admin:
+  clientid: ${SEC_CLIENT_ID:spongeblog-admin}
+  secretkey: ${SEC_CLIENT_ID:p0F0J5y1Yk5bSPvJqfa8YThfKNnunQUC}
+security-author:
+  clientid: ${SEC_CLIENT_ID:spongeblog-user}
+  secretkey: ${SEC_CLIENT_ID:DqvRMa9RUtkLi9W6CQaZyuPY3kk1AzVK}
+
+## openId config for Google
+google:
+  client: 
+    clientId: some-client
+    clientSecret: some-key
+    accessTokenUri: https://www.googleapis.com/oauth2/v3/token
+    userAuthorizationUri: https://accounts.google.com/o/oauth2/auth
+  redirectUri: http://localhost:8080/login

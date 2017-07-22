@@ -1,0 +1,11 @@
+<tr th:fragment="paging" class="row">
+		<td class="left-align">
+			<a th:if="${pagination.hasPrevious}" href="#"
+				class="waves-effect waves-light btn-large amber" th:onclick="'fetchPosts(getQuery(' + (${pagination.pageNumber} - 1) + '));'">Previous page</a>
+		</td>
+		<td colspan="5"></td>
+		<td class="right-align">
+			<a th:if="${pagination.hasNext}" href="#"
+				class="waves-effect waves-light btn-large amber" th:onclick="'fetchPosts(getQuery(' + (${pagination.pageNumber} + 1) + '));'">Next page</a>
+		</td>
+</tr>

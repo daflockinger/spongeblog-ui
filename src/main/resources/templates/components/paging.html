@@ -1,0 +1,14 @@
+<div th:fragment="paging" class="row">
+	<div class="col s12 m12 l12">
+		<p class="left-align">
+			<a th:if="${pagination.previousLink}" href="#"
+				th:href="${pagination.previousLink}"
+				class="waves-effect waves-light btn-large amber">Previous page</a>
+		</p>
+		<p class="right-align">
+			<a th:if="${pagination.nextLink}" href="#"
+				th:href="${pagination.nextLink}"
+				class="waves-effect waves-light btn-large amber">Next page</a>
+		</p>
+	</div>
+</div>

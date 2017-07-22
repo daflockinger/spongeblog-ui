@@ -1,0 +1,18 @@
+<tr th:each="post : ${posts}">
+	<td th:text="${#dates.format(post.created,'yyyy-MM-dd')}"></td>
+	<td th:text="${post.title}"></td>
+	<td th:text="${post.status}"></td>
+	<td th:text="${post.category.name}"></td>
+	<td></td>
+	<td>
+		<button class="btn waves-effect waves-light" type="button">
+			<i class="fa fa-pencil " aria-hidden="true" title="Edit" th:onclick="'fetchPost(' + ${post.postId} + ');'"></i>
+		</button>
+	</td>
+	<td>
+		<button class="btn waves-effect waves-light" type="button">
+			<i class="fa fa-trash " aria-hidden="true" title="Remove" th:onclick="'deletePost(' + ${post.postId} + ');'"></i>
+		</button>
+	</td>
+</tr>
+<tr th:replace="admin/components/paging :: paging"></tr>

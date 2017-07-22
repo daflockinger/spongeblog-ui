@@ -1,0 +1,25 @@
+<footer class="page-footer grey" th:template="footer">
+          <div class="container">
+            <div class="row">
+              <div class="col l12 s12">
+                <h5 class="white-text">Social:</h5>
+                  <h5>
+                  <span class="social-links" th:if="${blog['socialTwitter']}"><a th:href="${blog['socialTwitter']}"><i class="fa fa-twitter" aria-hidden="true"></i></a></span>
+                  <span class="social-links" th:if="${blog['socialFacebook']}"><a th:href="${blog['socialFacebook']}"><i class="fa fa-facebook" aria-hidden="true"></i></a></span>
+                  <span class="social-links" th:if="${blog['socialInstagram']}"><a th:href="${blog['socialInstagram']}"><i class="fa fa-instagram" aria-hidden="true"></i></a></span>
+                  <span class="social-links" th:if="${blog['socialReddit']}"><a th:href="${blog['socialReddit']}"><i class="fa fa-reddit-alien" aria-hidden="true"></i></a></span>
+                  <span class="social-links" th:if="${blog['socialGoogle']}"><a th:href="${blog['socialGoogle']}"><i class="fa fa-google-plus" aria-hidden="true"></i></a></span>
+                  <span class="social-links" th:if="${blog['socialYoutube']}"><a th:href="${blog['socialYoutube']}"><i class="fa fa-youtube-play" aria-hidden="true"></i></a></span>
+                  </h5>
+              </div>
+            </div>
+          </div>
+          <div class="footer-copyright grey darken-1">
+            <div class="container">
+              <div class="row">
+                  <div class=" col s12 m12 l12">© 2017 daflockinger. All rights reserved.
+                </div>
+              </div>
+            </div>
+          </div>
+</footer>
