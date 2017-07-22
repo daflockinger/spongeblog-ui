@@ -24,3 +24,7 @@
 #sidenav-overlay {
 	z-index: 1;
 }
+
+.social-links {
+	margin-right: 8px;
+}

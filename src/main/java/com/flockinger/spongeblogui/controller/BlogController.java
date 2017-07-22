@@ -69,7 +69,7 @@ public class BlogController {
       @PathVariable(value = "page", required = false) Optional<Integer> page,
       @RequestParam(value = "size", required = false, defaultValue = "5") Integer size,
       @PathVariable("category") String category) {
-    Paging chosenPage = new Paging(page, size, "/category/" + category);
+    Paging chosenPage = new Paging(page, size, "category/" + category);
 
     PostsPage postPage = renderMarkdownInPostPage(
         service.getPostsForCategory(linkHelper.recoverIdFromLink(category), chosenPage));
@@ -85,7 +85,7 @@ public class BlogController {
       @PathVariable(value = "page", required = false) Optional<Integer> page,
       @RequestParam(value = "size", required = false, defaultValue = "5") Integer size,
       @PathVariable("tag") String tag) {
-    Paging chosenPage = new Paging(page, size, "/tag/" + tag);
+    Paging chosenPage = new Paging(page, size, "tag/" + tag);
 
     PostsPage postPage = renderMarkdownInPostPage(
         service.getPostsForTag(linkHelper.recoverIdFromLink(tag), chosenPage));
@@ -101,7 +101,7 @@ public class BlogController {
       @PathVariable(value = "page", required = false) Optional<Integer> page,
       @RequestParam(value = "size", required = false, defaultValue = "5") Integer size,
       @PathVariable("user") String user) {
-    Paging chosenPage = new Paging(page, size, "/user/" + user);
+    Paging chosenPage = new Paging(page, size, "user/" + user);
 
     PostsPage postPage = renderMarkdownInPostPage(
         service.getPostsForUser(linkHelper.recoverIdFromLink(user), chosenPage));

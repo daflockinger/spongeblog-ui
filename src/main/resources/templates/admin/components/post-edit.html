@@ -109,7 +109,11 @@
     	element: document.getElementById("content"),
     	forceSync: true,
     	showIcons: ["strikethrough","code", "table","clean-block","horizontal-rule"],
-    	hideIcons: ["side-by-side", "fullscreen"]
+    	hideIcons: ["side-by-side", "fullscreen"],
+    	renderingConfig: {
+    		singleLineBreaks: true,
+    		codeSyntaxHighlighting: true,
+    	}
     });
   /*]]>*/
   </script>
